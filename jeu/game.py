@@ -30,17 +30,12 @@ def LancementJeu(screen):
         if key[pygame.K_s] == True:
             if player.y < 925:
                 player.move_ip(0, 1)
+        if key[pygame.K_ESCAPE] == True:
+            running = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                x, y = pygame.mouse.get_pos()
-                # Vérifiez les coordonnées du clic et faire des actions 
-                if 885 <= x <= 1035 and 590 <= y <= 640:
-                    running = False
 
-        pygame.draw.rect(screen, BLACK, (885, 590, 150, 50))
-        draw_text("Quitter", pygame.font.Font(None, 36), WHITE, screen, 960, 615)
         
         pygame.display.flip()
         pygame.display.update()
