@@ -19,13 +19,17 @@ def LancementJeu(screen):
         pygame.draw.rect(screen, (255, 0, 0), player)
         key = pygame.key.get_pressed()
         if key[pygame.K_q] == True:
-            player.move_ip(-1, 0)
+            if player.x > 190:
+                player.move_ip(-1, 0)
         if key[pygame.K_d] == True:
-            player.move_ip(1, 0)
+            if player.x < 1680:
+                player.move_ip(1, 0)
         if key[pygame.K_z] == True:
-            player.move_ip(0, -1)
+            if player.y > 105:
+                player.move_ip(0, -1)
         if key[pygame.K_s] == True:
-            player.move_ip(0, 1)
+            if player.y < 925:
+                player.move_ip(0, 1)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
