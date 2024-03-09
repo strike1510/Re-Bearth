@@ -4,12 +4,21 @@ def GrandMenu(screen):
 
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
+    TRANSPARENT = (0, 0, 0, 0)
     font = pygame.font.Font(None, 36)
+
+    background = pygame.image.load("menu\\image\\bg.jpg")
+    options_image = pygame.image.load("menu\\image\\parametre.png")
 
     #   Bouton jouer :
     button1_text = font.render("Jouer", True, WHITE)
     button1_rect = button1_text.get_rect(center=(960, 540))
     button1_visible = True
+
+    #   Bouton options :
+    option = pygame.Surface((64, 64), pygame.SRCALPHA)
+    option.fill(TRANSPARENT)
+    option_rect = option.get_rect(center=(1680, 170))
 
     rect_x = 885
     rect_y = 515
@@ -25,6 +34,9 @@ def GrandMenu(screen):
 
     running = True
     while running:
+        screen.blit(background, (0, 0))
+        pygame.draw.rect(option, (0, 0, 255), option.get_rect(), 3) 
+        screen.blit(options_image, option_rect)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -40,7 +52,6 @@ def GrandMenu(screen):
                     running = False
                     return True
 
-        screen.fill(WHITE)
         if rect_visible:
             pygame.draw.rect(screen, BLACK, (rect_x, rect_y, rect_width, rect_height))
         if button1_visible:

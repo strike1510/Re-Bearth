@@ -29,7 +29,6 @@ def LancementJeu(screen,pos_player_x,pos_player_y):
     running = True
     while running:
         screen.blit(background, (0, 0))
-        print("test")
         #pygame.draw.rect(screen, (255, 0, 0), player)
         pygame.draw.rect(porte, (0, 0, 255), porte.get_rect(), 3) 
         screen.blit(image_porte, porte_rect)
