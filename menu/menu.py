@@ -30,13 +30,11 @@ def GrandMenu(screen):
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
-                # Vérifiez les coordonnées du clic et faire des actions 
                 if 885 <= x <= 1035 and 590 <= y <= 640:
                     running = False
                     return False
                 #if button1_visible and button1_rect.collidepoint(event.pos):
                 if 885 <= x <= 1035 and 515 <= y <= 565:
-                    # Cacher le bouton 1
                     button1_visible = False
                     rect_visible = False
                     running = False
