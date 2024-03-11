@@ -1,6 +1,6 @@
-import pygame, sys , jeu.game
+import pygame, sys , jeu.game , menu.pause
 def Jeuroom1(screen,pos_player_x,pos_player_y):
-    
+    testpause = False
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
     TRANSPARENT = (0, 0, 0, 0)
@@ -70,8 +70,17 @@ def Jeuroom1(screen,pos_player_x,pos_player_y):
             if player_rect.y < 925:
                 player_rect.move_ip(0, 1)
                 image = pygame.image.load('jeu\\image\\devant.png')
+
+        #   Code pour pause :
         if key[pygame.K_ESCAPE] == True:
-            running = False
+            if testpause == False:
+                testquit = menu.pause.Pause(screen)
+                testpause = True
+                if testquit == False:
+                    running = False
+        else:
+            testpause = False
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
