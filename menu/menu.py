@@ -1,6 +1,6 @@
 import pygame, sys
 
-def GrandMenu(screen):
+def GrandMenu(screen, HAUTEUR, LARGEUR):
 
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
@@ -8,20 +8,15 @@ def GrandMenu(screen):
     font = pygame.font.Font(None, 36)
 
     background = pygame.image.load("menu\\image\\bg.jpg")
-    options_image = pygame.image.load("menu\\image\\parametre.png")
+    background = pygame.transform.scale(background, (LARGEUR, HAUTEUR))
 
     #   Bouton jouer :
     button1_text = font.render("Jouer", True, WHITE)
-    button1_rect = button1_text.get_rect(center=(960, 540))
+    button1_rect = button1_text.get_rect(center=(960*LARGEUR/1920, 540*HAUTEUR/1080))
     button1_visible = True
 
-    #   Bouton options :
-    option = pygame.Surface((64, 64), pygame.SRCALPHA)
-    option.fill(TRANSPARENT)
-    option_rect = option.get_rect(center=(1680, 170))
-
-    rect_x = 885
-    rect_y = 515
+    rect_x = 885*LARGEUR/1920
+    rect_y = 515*HAUTEUR/1080
     rect_width = 150
     rect_height = 50
     rect_visible = True
@@ -35,18 +30,15 @@ def GrandMenu(screen):
     running = True
     while running:
         screen.blit(background, (0, 0))
-        pygame.draw.rect(option, (0, 0, 255), option.get_rect(), 3) 
-        screen.blit(options_image, option_rect)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
-                if 885 <= x <= 1035 and 590 <= y <= 640:
+                if 885*LARGEUR/1920 <= x <= 1035*LARGEUR/1920 and 590*HAUTEUR/1080 <= y <= 640*HAUTEUR/1080:
                     running = False
                     return False
-                #if button1_visible and button1_rect.collidepoint(event.pos):
-                if 885 <= x <= 1035 and 515 <= y <= 565:
+                if 885*LARGEUR/1920 <= x <= 1035*LARGEUR/1920 and 515*HAUTEUR/1080 <= y <= 565*HAUTEUR/1080:
                     button1_visible = False
                     rect_visible = False
                     running = False
@@ -63,7 +55,7 @@ def GrandMenu(screen):
         #pygame.draw.rect(screen, BLACK, (885, 515, 150, 50))
         #draw_text("Jouer", pygame.font.Font(None, 36), WHITE, screen, 960, 540)
 
-        pygame.draw.rect(screen, BLACK, (885, 590, 150, 50))
-        draw_text("Quitter", pygame.font.Font(None, 36), WHITE, screen, 960, 615)
+        pygame.draw.rect(screen, BLACK, (LARGEUR*885/1920, HAUTEUR*590/1080, 150, 50))
+        draw_text("Quitter", pygame.font.Font(None, 36), WHITE, screen, LARGEUR*960/1920, HAUTEUR*615/1080)
         
         pygame.display.flip()
