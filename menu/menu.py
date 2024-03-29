@@ -27,6 +27,9 @@ def GrandMenu(screen, HAUTEUR, LARGEUR):
         text_rect.center = (x, y)
         surface.blit(text_obj, text_rect)
 
+    pygame.mixer.music.load("menu\\sons\\menu1.mp3")
+    pygame.mixer.music.play(-1)
+
     running = True
     while running:
         screen.blit(background, (0, 0))
@@ -41,6 +44,7 @@ def GrandMenu(screen, HAUTEUR, LARGEUR):
                 if 885*LARGEUR/1920 <= x <= 1035*LARGEUR/1920 and 515*HAUTEUR/1080 <= y <= 565*HAUTEUR/1080:
                     button1_visible = False
                     rect_visible = False
+                    pygame.mixer.music.stop()
                     running = False
                     return True
 

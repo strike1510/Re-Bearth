@@ -1,4 +1,4 @@
-import pygame, sys, time
+import pygame, sys, time, menu.options
 WHITE = (255, 255, 255)
 TRANSPARENT = (255, 255, 255, 20)
 BLACK = (0, 0, 0)
@@ -12,6 +12,8 @@ def Pause(screen,HAUTEUR,LARGEUR):
     PauseFond_rect = PauseFond.get_rect(center=(960*LARGEUR/1920, 500*HAUTEUR/1080))
     imagePauseFond = pygame.image.load('menu\\image\\pause.png')
     image_PauseFond = pygame.transform.scale(imagePauseFond, (440*LARGEUR/1920, 540*HAUTEUR/1080))
+
+    pygame.mixer.music.pause()
 
     def draw_text(text, font, color, surface, x, y):
         text_obj = font.render(text, True, color)
@@ -43,6 +45,7 @@ def Pause(screen,HAUTEUR,LARGEUR):
         if key[pygame.K_ESCAPE] == True:
             if test == True:
                 pause = False
+                pygame.mixer.music.unpause()
                 return True
         else:
             test = True
@@ -52,6 +55,12 @@ def Pause(screen,HAUTEUR,LARGEUR):
                     x, y = pygame.mouse.get_pos()
                     if 900*LARGEUR/1920 <= x <= 1020*LARGEUR/1920 and 610*HAUTEUR/1080 <= y <= 650*HAUTEUR/1080:
                         return False
+                    if 900*LARGEUR/1920 <= x <= 1020*LARGEUR/1920 and 430*HAUTEUR/900 <= y <= 470*HAUTEUR/900:
+                        pause = False
+                        pygame.mixer.music.unpause()
+                        menu.options.parametre(screen,HAUTEUR,LARGEUR)
+                        return True
                     if 900*LARGEUR/1920 <= x <= 1020*LARGEUR/1920 and 350*HAUTEUR/1080 <= y <= 390*HAUTEUR/1080:
                         pause = False
+                        pygame.mixer.music.unpause()
                         return True

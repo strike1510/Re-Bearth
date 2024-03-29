@@ -11,8 +11,10 @@
 import pygame
 import menu.menu
 import menu.pause
+import jeu.fonction
 import jeu.game
 import jeu.room1
+
 
 from pygame.locals import *
 
@@ -33,6 +35,8 @@ VITESSE = 8
 test = menu.menu.GrandMenu(screen, HAUTEUR, LARGEUR)
 
 if test:
+    pygame.mixer.music.load("jeu\\sons\\jeu33.mp3")
+    pygame.mixer.music.play(-1)
     jeu.game.LancementJeu(screen, LARGEUR/2, HAUTEUR/2, VITESSE, HAUTEUR, LARGEUR)
 
 pygame.quit()

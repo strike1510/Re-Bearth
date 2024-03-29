@@ -1,11 +1,11 @@
-import pygame, sys , jeu.room1 , menu.pause , math
+import pygame, sys , jeu.room1 , jeu.room2 , jeu.combat.battle, menu.pause , math , jeu.fonction
 def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
     testpause = False
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
     TRANSPARENT = (0, 0, 0, 0)
     dimmension_perso = 64
-    last = "z"
+    
     background = pygame.image.load("jeu\\image\\background.jpg")
     colision_background = pygame.image.load("jeu\\image\\CollisionMapProto.png")
     clock = pygame.time.Clock()
@@ -17,9 +17,8 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
     screen_y = 0
     #background = pygame.image.load("jeu\\image\\background.jpg")
     background = pygame.transform.scale(background, (LARGEUR, HAUTEUR))
-    colision_background = pygame.transform.scale(colision_background, (LARGEUR, HAUTEUR))
-
-    collision_colors = [(206, 2, 207, 255), (0, 255, 0)]
+    largeur_cible, hauteur_cible = background.get_size()
+    colision_background = pygame.transform.scale(colision_background, (largeur_cible, hauteur_cible))
 
     #porte = pygame.Rect((500, 500, 64, 64))
     porte = pygame.Surface((64, 64), pygame.SRCALPHA)
@@ -31,10 +30,7 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
     player_rect = player.get_rect(center=(pos_player_x,pos_player_y))
 
     #Image joueur :
-    imagesdroite = [pygame.image.load(f"jeu\\image\\player\\droite{i}.png") for i in range(1, 4)]
-    imageshaut = pygame.image.load("jeu\\image\\player\\derriere.png")
     imagesbas = pygame.image.load("jeu\\image\\player\\devant.png")
-    imagesgauche = pygame.image.load("jeu\\image\\player\\gauche.png")
     imageplayer = imagesbas
 
     image_porte_close = pygame.image.load('jeu\\image\\porte_close.png')
@@ -48,7 +44,9 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         surface.blit(text_obj, text_rect)
 
     running = True
-    index_image = 1
+    last = "s"
+    index_image = 0
+    
     while running:
         key = pygame.key.get_pressed()
             
@@ -61,7 +59,9 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         screen.blit(image_porte, porte_rect)
         pygame.draw.rect(player, (0, 0, 255), player.get_rect(), 3)  
         screen.blit(imageplayer, player_rect)
-        if player_rect.x > 550*LARGEUR/1600 and player_rect.x < 600*LARGEUR/1600 and player_rect.y < 700*HAUTEUR/900 and player_rect.y > 660*HAUTEUR/900:
+        
+        portemaison = jeu.fonction.EntryZone1600(player_rect.x,player_rect.y,550,700,600,660,HAUTEUR,LARGEUR)
+        if portemaison == True:
             image_porte = image_porte_open
             if key[pygame.K_SPACE] == True:
                 jeu.room1.Jeuroom1(screen, 260*LARGEUR/1920, 960*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
@@ -69,93 +69,16 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         else:
             image_porte = image_porte_close
         
+        
+        if jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,1920,680,1835,825,HAUTEUR,LARGEUR):
+            jeu.room2.Jeuroom2(screen, 150*LARGEUR/1920, 765*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+            #jeu.combat.battle.battle(screen,150*LARGEUR/1920, 765*HAUTEUR/1080, HAUTEUR,LARGEUR)
+            running = False
+        
         #print(colision_background.get_at((player_rect.x, player_rect.y)))
-            
-
-
-        if (key[pygame.K_q] == True and key[pygame.K_z] == False and key[pygame.K_s] == False):
-            if colision_background.get_at((player_rect.x, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y+dimmension_perso)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x, player_rect.y+dimmension_perso)) not in collision_colors:
-                if player_rect.x > 10*LARGEUR/1920:
-                    player_rect.move_ip(-VITESSE, 0)
-                    imageplayer = imagesgauche
-                    last = "q"
-        elif key[pygame.K_d] == True and key[pygame.K_z] == False and key[pygame.K_s] == False:
-            if colision_background.get_at((player_rect.x, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y+dimmension_perso)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x, player_rect.y+dimmension_perso)) not in collision_colors:
-                if player_rect.x < 1800*LARGEUR/1920:
-                    player_rect.move_ip(VITESSE, 0)
-                    imageplayer = imagesdroite[index_image]
-                    last = "d"
-        elif key[pygame.K_z] == True and key[pygame.K_q] == False and key[pygame.K_d] == False:
-            if colision_background.get_at((player_rect.x, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y+dimmension_perso)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x, player_rect.y+dimmension_perso)) not in collision_colors:
-                if player_rect.y > 10*HAUTEUR/1080:
-                    player_rect.move_ip(0, -VITESSE)
-                    imageplayer = imageshaut
-                    last = "z"
-        elif key[pygame.K_s] == True and key[pygame.K_q] == False and key[pygame.K_d] == False:
-            if colision_background.get_at((player_rect.x, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y+dimmension_perso)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x, player_rect.y+dimmension_perso)) not in collision_colors:
-                if player_rect.y < 940*HAUTEUR/1080:
-                    player_rect.move_ip(0, VITESSE)
-                    imageplayer = imagesbas
-                    last = "s"
-        
-        elif key[pygame.K_s] == True and key[pygame.K_q] == True and key[pygame.K_d] == False:
-            if colision_background.get_at((player_rect.x, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y+dimmension_perso)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x, player_rect.y+dimmension_perso)) not in collision_colors:
-                if player_rect.y < 1000*HAUTEUR/1080 and player_rect.x > 10*LARGEUR/1920:
-                    player_rect.move_ip(0, round(VITESSE/math.sqrt(2)))
-                    player_rect.move_ip(-round(VITESSE/math.sqrt(2)), 0)
-                    imageplayer = imagesbas
-                    last = "sq"
-        
-        elif key[pygame.K_s] == True and key[pygame.K_q] == False and key[pygame.K_d] == True:
-            if colision_background.get_at((player_rect.x, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y+dimmension_perso)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x, player_rect.y+dimmension_perso)) not in collision_colors:
-                if player_rect.y < 1000*HAUTEUR/1080 and player_rect.x < 1800*LARGEUR/1920:
-                    player_rect.move_ip(0, round(VITESSE/math.sqrt(2)))
-                    player_rect.move_ip(round(VITESSE/math.sqrt(2)), 0)
-                    imageplayer = imagesbas
-                    last = "sd"
-        
-        elif key[pygame.K_z] == True and key[pygame.K_q] == True and key[pygame.K_d] == False:
-            if colision_background.get_at((player_rect.x, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y+dimmension_perso)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x, player_rect.y+dimmension_perso)) not in collision_colors:
-                if player_rect.y > 10*HAUTEUR/1080 and player_rect.x > 10*LARGEUR/1920:
-                    player_rect.move_ip(0, -round(VITESSE/math.sqrt(2)))
-                    player_rect.move_ip(-round(VITESSE/math.sqrt(2)), 0)
-                    imageplayer = imageshaut
-                    last = "zq"
-        
-        elif key[pygame.K_z] == True and key[pygame.K_q] == False and key[pygame.K_d] == True:
-            if colision_background.get_at((player_rect.x, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y+dimmension_perso)) not in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y)) not in collision_colors or colision_background.get_at((player_rect.x, player_rect.y+dimmension_perso)) not in collision_colors:
-                if player_rect.y > 10*HAUTEUR/1080 and player_rect.x < 1800*LARGEUR/1920:
-                    player_rect.move_ip(0, -round(VITESSE/math.sqrt(2)))
-                    player_rect.move_ip(round(VITESSE/math.sqrt(2)), 0)
-                    imageplayer = imageshaut
-                    last = "zd"
-        
-
-        
-        if colision_background.get_at((player_rect.x, player_rect.y)) in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y+dimmension_perso)) in collision_colors or colision_background.get_at((player_rect.x+dimmension_perso, player_rect.y)) in collision_colors or colision_background.get_at((player_rect.x, player_rect.y+dimmension_perso)) in collision_colors:
-            if last == "z":
-                player_rect.move_ip(0, VITESSE)
-            elif last == "s":
-                player_rect.move_ip(0, -VITESSE)
-            elif last == "q":
-                player_rect.move_ip(VITESSE, 0)
-            elif last == "d":
-                player_rect.move_ip(-VITESSE, 0)
-            elif last == "zq":
-                player_rect.move_ip(0, round(VITESSE/math.sqrt(2)))
-                player_rect.move_ip(round(VITESSE/math.sqrt(2)), 0)
-            elif last == "zd":
-                player_rect.move_ip(0, round(VITESSE/math.sqrt(2)))
-                player_rect.move_ip(-round(VITESSE/math.sqrt(2)), 0)
-            elif last == "sq":
-                player_rect.move_ip(0, -round(VITESSE/math.sqrt(2)))
-                player_rect.move_ip(round(VITESSE/math.sqrt(2)), 0)
-            elif last == "sd":
-                player_rect.move_ip(0, -round(VITESSE/math.sqrt(2)))
-                player_rect.move_ip(-round(VITESSE/math.sqrt(2)), 0)
-            else:
-                print("Error")
-                    
+        depinfo = jeu.fonction.deplacement(key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image)
+        imageplayer = depinfo[0]
+        last = depinfo[1]
         
         #   Code pour pause :
         if key[pygame.K_ESCAPE] == True:
@@ -167,7 +90,7 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         else:
             testpause = False
 
-        index_image = (index_image + 1) % len(imagesdroite)
+        
         clock.tick(30)
         for event in pygame.event.get():
             

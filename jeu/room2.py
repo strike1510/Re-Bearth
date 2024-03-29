@@ -1,30 +1,33 @@
-import pygame, sys , jeu.game , menu.pause
-def Jeuroom2(screen,pos_player_x,pos_player_y):
+import pygame, sys , jeu.room1 , menu.pause , math , jeu.fonction
+def Jeuroom2(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
     testpause = False
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
     TRANSPARENT = (0, 0, 0, 0)
-    background = pygame.image.load("jeu\\image\\room.jpg")
-    image = background
-    image_rect = image.get_rect()
-    win_size = (1920,1080)
+    dimmension_perso = 64
+    
+    background = pygame.image.load("jeu\\image\\room2\\planvieux.png")
+    colision_background = pygame.image.load("jeu\\image\\room2\\CollisionMap.png")
+    clock = pygame.time.Clock()
 
-    #porte = pygame.Rect((500, 500, 64, 64))
-    porte = pygame.Surface((64, 64), pygame.SRCALPHA)
-    porte.fill(TRANSPARENT)
-    porte_rect = porte.get_rect(center=(250, 1080 // 2))
+    #TEST 
+    rect_x = LARGEUR // 2
+    rect_y = HAUTEUR // 2
+    screen_x = 0
+    screen_y = 0
+    #background = pygame.image.load("jeu\\image\\background.jpg")
+    background = pygame.transform.scale(background, (LARGEUR, HAUTEUR))
+    largeur_cible, hauteur_cible = background.get_size()
+    colision_background = pygame.transform.scale(colision_background, (largeur_cible, hauteur_cible))
 
-    player = pygame.Surface((64, 64), pygame.SRCALPHA)
+    player = pygame.Surface((dimmension_perso, dimmension_perso), pygame.SRCALPHA)
     player.fill(TRANSPARENT)
     player_rect = player.get_rect(center=(pos_player_x,pos_player_y))
-    
-    image = pygame.image.load('jeu\\image\\devant.png')
-    image_porte_close = pygame.image.load('jeu\\image\\porte_close.png')
-    image_porte_open = pygame.image.load('jeu\\image\\porte.png')
-    image_porte = image_porte_close
 
-    #zoom sur le perso instant
-    zoom_factor = 1.0
+    #Image joueur :
+    imagesbas = pygame.image.load("jeu\\image\\player\\devant.png")
+    imageplayer = imagesbas
+
 
     def draw_text(text, font, color, surface, x, y):
         text_obj = font.render(text, True, color)
@@ -33,65 +36,41 @@ def Jeuroom2(screen,pos_player_x,pos_player_y):
         surface.blit(text_obj, text_rect)
 
     running = True
+    last = "z"
+    index_image = 0
+    
     while running:
-        screen.blit(background, (0, 0))
-        new_width = int(image_rect.width * zoom_factor)
-        new_height = int(image_rect.height * zoom_factor)
-        scaled_image = pygame.transform.scale(image, (new_width, new_height))
-        screen.blit(scaled_image, ((win_size[0] - new_width) // 2, (win_size[1] - new_height) // 2))
-        #pygame.draw.rect(screen, (255, 0, 0), player)
-        pygame.draw.rect(porte, (0, 0, 255), porte.get_rect(), 3) 
-        screen.blit(image_porte, porte_rect)
-        pygame.draw.rect(player, (0, 0, 255), player.get_rect(), 3)  
-        screen.blit(image, player_rect)
-
         key = pygame.key.get_pressed()
-
-        if player_rect.x > 190:
-            if player_rect.x < 235:
-                if player_rect.y < 550:
-                    if player_rect.y > 480:
-                        image_porte = image_porte_open
-                        if key[pygame.K_SPACE] == True:
-                            running = False
-                            jeu.game.LancementJeu(screen,1550,1080 // 2)
-                    else:
-                        image_porte = image_porte_close
-                else:
-                    image_porte = image_porte_close
-            else:
-                image_porte = image_porte_close
-        else:
-            image_porte = image_porte_close
+            
+        screen_x = rect_x - LARGEUR / 2
+        screen_y = rect_y - HAUTEUR / 2
+        screen.blit(background, (screen_x, screen_y))
+        pygame.draw.rect(player, (0, 0, 255), player.get_rect(), 3)  
+        screen.blit(imageplayer, player_rect)
         
-        if key[pygame.K_q] == True:
-            if player_rect.x > 190:
-                player_rect.move_ip(-1, 0)
-                image = pygame.image.load('jeu\\image\\gauche.png')
-        if key[pygame.K_d] == True:
-            if player_rect.x < 1680:
-                player_rect.move_ip(1, 0)
-                image = pygame.image.load('jeu\\image\\droite.png')
-        if key[pygame.K_z] == True:
-            if player_rect.y > 105:
-                player_rect.move_ip(0, -1)
-                image = pygame.image.load('jeu\\image\\derriere.png')
-        if key[pygame.K_s] == True:
-            if player_rect.y < 925:
-                player_rect.move_ip(0, 1)
-                image = pygame.image.load('jeu\\image\\devant.png')
-
+        if jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,15,715,0,815,HAUTEUR,LARGEUR):
+            jeu.game.LancementJeu(screen,1750*LARGEUR/1920,770*HAUTEUR/1080,VITESSE, HAUTEUR,LARGEUR)
+            running = False
+        
+        #print(colision_background.get_at((player_rect.x, player_rect.y)))
+        depinfo = jeu.fonction.deplacement(key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image)
+        imageplayer = depinfo[0]
+        last = depinfo[1]
+        
         #   Code pour pause :
         if key[pygame.K_ESCAPE] == True:
             if testpause == False:
-                testquit = menu.pause.Pause(screen)
+                testquit = menu.pause.Pause(screen,HAUTEUR,LARGEUR)
                 testpause = True
                 if testquit == False:
                     running = False
         else:
             testpause = False
+
         
+        clock.tick(30)
         for event in pygame.event.get():
+            
             if event.type == pygame.QUIT:
                 running = False
 
