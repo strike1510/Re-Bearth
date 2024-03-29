@@ -57,6 +57,7 @@ def Jeuroom1(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         depinfo = jeu.fonction.deplacement(key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image)
         imageplayer = depinfo[0]
         last = depinfo[1]
+        index_image = depinfo[2]
         
         #   Code pour pause :
         if key[pygame.K_ESCAPE] == True:

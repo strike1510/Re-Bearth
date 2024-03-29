@@ -42,8 +42,8 @@ def battle(screen,pos_player_x,pos_player_y, HAUTEUR,LARGEUR):
         for j in range (0,16):
             coo[i][j] = (512*LARGEUR/1920)+i*60,(92*HAUTEUR/1080)+j*60
     
-    cooplayerx = 1
-    cooplayery = 1
+    cooplayerx = 0
+    cooplayery = 15
 
     tempx , tempy = coo[cooplayerx][cooplayery]
     tempy -= 8*LARGEUR/1920

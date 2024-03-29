@@ -19,11 +19,11 @@ imagesgauche = [pygame.image.load("jeu\\image\\player\\gauche.png")]
 dimmension_perso = 64
 def deplacement(key, PLAYER, VITESSE, perso, colision_background, HAUTEUR, LARGEUR, last, index_image):
     collision_colors = [(206, 2, 207, 255), (205, 2, 206, 255), (178, 0, 255, 255)]
-    imageplayer = imagesbas[index_image]
+    imageplayer = imagesbas[0]
     if (key[pygame.K_q] == True and key[pygame.K_z] == False and key[pygame.K_s] == False and key[pygame.K_d] == False):
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.x > 10*LARGEUR/1920:
-                if last != "q":
+                if len(imagesgauche) <= index_image:
                     index_image = 0
                 PLAYER.move_ip(-VITESSE, 0)
                 imageplayer = imagesgauche[index_image]
@@ -31,15 +31,16 @@ def deplacement(key, PLAYER, VITESSE, perso, colision_background, HAUTEUR, LARGE
     elif key[pygame.K_d] == True and key[pygame.K_z] == False and key[pygame.K_s] == False and key[pygame.K_q] == False:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.x < 1850*LARGEUR/1920:
-                if last != "d":
+                if len(imagesdroite) <= index_image:
                     index_image = 0
                 PLAYER.move_ip(VITESSE, 0)
                 imageplayer = imagesdroite[index_image]
+                index_image = (index_image + 1) % len(imagesdroite)
                 last = "d"
     elif key[pygame.K_z] == True and key[pygame.K_q] == False and key[pygame.K_d] == False and key[pygame.K_s] == False:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.y > 10*HAUTEUR/1080:
-                if last != "z":
+                if len(imageshaut) <= index_image:
                     index_image = 0
                 PLAYER.move_ip(0, -VITESSE)
                 imageplayer = imageshaut[index_image]
@@ -47,7 +48,7 @@ def deplacement(key, PLAYER, VITESSE, perso, colision_background, HAUTEUR, LARGE
     elif key[pygame.K_s] == True and key[pygame.K_q] == False and key[pygame.K_d] == False and key[pygame.K_z] == False:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.y < 1000*HAUTEUR/1080:
-                if last != "s":
+                if len(imagesbas) <= index_image:
                     index_image = 0
                 PLAYER.move_ip(0, VITESSE)
                 imageplayer = imagesbas[index_image]
@@ -56,7 +57,7 @@ def deplacement(key, PLAYER, VITESSE, perso, colision_background, HAUTEUR, LARGE
     elif key[pygame.K_s] == True and key[pygame.K_q] == True:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.y < 1000*HAUTEUR/1080 and PLAYER.x > 10*LARGEUR/1920:
-                if last != "sq":
+                if len(imagesbas) <= index_image:
                     index_image = 0
                 PLAYER.move_ip(0, round(VITESSE/math.sqrt(2)))
                 PLAYER.move_ip(-round(VITESSE/math.sqrt(2)), 0)
@@ -66,7 +67,7 @@ def deplacement(key, PLAYER, VITESSE, perso, colision_background, HAUTEUR, LARGE
     elif key[pygame.K_s] == True and key[pygame.K_d] == True:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.y < 1000*HAUTEUR/1080 and PLAYER.x < 1850*LARGEUR/1920:
-                if last != "sd":
+                if len(imagesbas) <= index_image:
                     index_image = 0
                 PLAYER.move_ip(0, round(VITESSE/math.sqrt(2)))
                 PLAYER.move_ip(round(VITESSE/math.sqrt(2)), 0)
@@ -76,7 +77,7 @@ def deplacement(key, PLAYER, VITESSE, perso, colision_background, HAUTEUR, LARGE
     elif key[pygame.K_z] == True and key[pygame.K_q] == True:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.y > 10*HAUTEUR/1080 and PLAYER.x > 10*LARGEUR/1920:
-                if last != "zq":
+                if len(imageshaut) <= index_image:
                     index_image = 0
                 PLAYER.move_ip(0, -round(VITESSE/math.sqrt(2)))
                 PLAYER.move_ip(-round(VITESSE/math.sqrt(2)), 0)
@@ -86,13 +87,14 @@ def deplacement(key, PLAYER, VITESSE, perso, colision_background, HAUTEUR, LARGE
     elif key[pygame.K_z] == True and key[pygame.K_d] == True:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.y > 10*HAUTEUR/1080 and PLAYER.x < 1850*LARGEUR/1920:
-                if last != "zd":
+                if len(imageshaut) <= index_image:
                     index_image = 0
                 PLAYER.move_ip(0, -round(VITESSE/math.sqrt(2)))
                 PLAYER.move_ip(round(VITESSE/math.sqrt(2)), 0)
                 imageplayer = imageshaut[index_image]
                 last = "zd"
     else:
+        index_image = 0
         if last == "z":
             imageplayer = imageshaut[index_image]
         elif last == "s":
@@ -138,8 +140,7 @@ def deplacement(key, PLAYER, VITESSE, perso, colision_background, HAUTEUR, LARGE
         else:
             print("Error")
     
-    #index_image = (index_image + 1) % len(imagesdroite)
-    info = [imageplayer, last]
+    info = [imageplayer, last, index_image]
 
     return info
 
