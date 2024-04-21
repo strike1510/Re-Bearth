@@ -27,7 +27,7 @@ def Jeuroom2(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
     #Image joueur :
     imagesbas = pygame.image.load("jeu\\image\\player\\devant.png")
     imageplayer = imagesbas
-
+    
 
     def draw_text(text, font, color, surface, x, y):
         text_obj = font.render(text, True, color)
@@ -53,7 +53,19 @@ def Jeuroom2(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
             running = False
         
         #print(colision_background.get_at((player_rect.x, player_rect.y)))
-        depinfo = jeu.fonction.deplacement(key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image)
+        
+        for event in pygame.event.get():
+            
+            if event.type == pygame.QUIT:
+                running = False
+
+        keys = pygame.key.get_pressed()
+        pressed_keys_indices = [i for i, v in enumerate(keys) if v]
+        if len(pressed_keys_indices) > 0:
+            binary_values = [bin(key_index) for key_index in pressed_keys_indices]
+        else:
+            binary_values = ['0']
+        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image)
         imageplayer = depinfo[0]
         last = depinfo[1]
         index_image = depinfo[2]
@@ -61,7 +73,7 @@ def Jeuroom2(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         #   Code pour pause :
         if key[pygame.K_ESCAPE] == True:
             if testpause == False:
-                testquit = menu.pause.Pause(screen,HAUTEUR,LARGEUR)
+                testquit = menu.pause.Pause(2,player_rect.x,player_rect.y,screen,HAUTEUR,LARGEUR)
                 testpause = True
                 if testquit == False:
                     running = False
@@ -70,10 +82,7 @@ def Jeuroom2(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
 
         
         clock.tick(30)
-        for event in pygame.event.get():
-            
-            if event.type == pygame.QUIT:
-                running = False
+        
 
         
         pygame.display.flip()

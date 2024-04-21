@@ -1,0 +1,12 @@
+LvL:
+1
+ID de Zone:
+0;1068;455
+Money:
+0
+Niveau de Quetes:
+0
+sac:
+NULL;NULL;NULL;LOCK;LOCK;LOCK;LOCK;LOCK;LOCK
+Touches:
+0b11010;0b100;0b10110;0b111

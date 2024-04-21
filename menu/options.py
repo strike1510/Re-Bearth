@@ -52,7 +52,6 @@ def parametre(screen,HAUTEUR,LARGEUR):
             test = True
         
         
-        pos_x = pygame.mouse.get_pos()
         newx, y = pygame.mouse.get_pos()
 
         # Limiter la position du bouton dans la fenêtre
@@ -66,12 +65,15 @@ def parametre(screen,HAUTEUR,LARGEUR):
         
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
-                    x, y = pygame.mouse.get_pos()
-                    print(x,y)
-                    if x > 820*LARGEUR/1920 and x < 1100*LARGEUR/1920 and y > 275*HAUTEUR/1080 and y < 310*HAUTEUR/1080: 
-                        bouton.deplacer(newx)
-                    if 870*LARGEUR/1920 <= x <= 1045*LARGEUR/1920 and 670*HAUTEUR/1080 <= y <= 715*HAUTEUR/1080:
-                        pause = False
-                        return True
+                x, y = pygame.mouse.get_pos()
+                print(x,y)
+                if x > 820*LARGEUR/1920 and x < 1100*LARGEUR/1920 and y > 275*HAUTEUR/1080 and y < 310*HAUTEUR/1080: 
+                    bouton.deplacer(newx)
+                if 870*LARGEUR/1920 <= x <= 1045*LARGEUR/1920 and 670*HAUTEUR/1080 <= y <= 715*HAUTEUR/1080:
+                    pause = False
+                    return True
+            elif event.type == pygame.KEYDOWN:
+                touche = event.key
+                print(f"Touche pressée : {pygame.key.name(touche)}")
         bouton.afficher()
         clock.tick(60)

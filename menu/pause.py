@@ -3,7 +3,7 @@ WHITE = (255, 255, 255)
 TRANSPARENT = (255, 255, 255, 20)
 BLACK = (0, 0, 0)
 
-def Pause(screen,HAUTEUR,LARGEUR):
+def Pause(zone,posx,posy,screen,HAUTEUR,LARGEUR):
     pause = True
     test = False
 
@@ -13,35 +13,17 @@ def Pause(screen,HAUTEUR,LARGEUR):
     imagePauseFond = pygame.image.load('menu\\image\\pause.png')
     image_PauseFond = pygame.transform.scale(imagePauseFond, (440*LARGEUR/1920, 540*HAUTEUR/1080))
 
-    pygame.mixer.music.pause()
+    with open('donnee\\sauvegarde.txt', 'r') as file:
+        stocke = []
+        for line in file:
+            stocke.append(line.replace("\n",""))
 
-    def draw_text(text, font, color, surface, x, y):
-        text_obj = font.render(text, True, color)
-        text_rect = text_obj.get_rect()
-        text_rect.center = (x, y)
-        surface.blit(text_obj, text_rect)
+    pygame.mixer.music.pause()
     while pause == True:
         pygame.display.flip()
         key = pygame.key.get_pressed()
         pygame.draw.rect(PauseFond, (0, 0, 255), PauseFond.get_rect(), 3) 
         screen.blit(image_PauseFond, PauseFond_rect)
-        '''
-        #   Quitter :
-        pygame.draw.rect(screen, BLACK, (885, 610, 150, 50))
-        draw_text("Quitter", pygame.font.Font(None, 36), WHITE, screen, 960, 635)
-
-        # Options :
-        pygame.draw.rect(screen, BLACK, (885, 510, 150, 50))
-        draw_text("Options", pygame.font.Font(None, 36), WHITE, screen, 960, 535)
-
-        # Sauvegarder :
-        pygame.draw.rect(screen, BLACK, (880, 410, 160, 50))
-        draw_text("Sauvegarder", pygame.font.Font(None, 36), WHITE, screen, 960, 435)
-
-        # Continuer :
-        pygame.draw.rect(screen, BLACK, (885, 310, 150, 50))
-        draw_text("Continuer", pygame.font.Font(None, 36), WHITE, screen, 960, 335)
-        '''
         if key[pygame.K_ESCAPE] == True:
             if test == True:
                 pause = False
@@ -53,14 +35,29 @@ def Pause(screen,HAUTEUR,LARGEUR):
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
-                    if 900*LARGEUR/1920 <= x <= 1020*LARGEUR/1920 and 610*HAUTEUR/1080 <= y <= 650*HAUTEUR/1080:
+                    if 795*LARGEUR/1920 <= x <= 1125*LARGEUR/1920 and 645*HAUTEUR/1080 <= y <= 740*HAUTEUR/1080:
                         return False
-                    if 900*LARGEUR/1920 <= x <= 1020*LARGEUR/1920 and 430*HAUTEUR/900 <= y <= 470*HAUTEUR/900:
+                    elif 795*LARGEUR/1920 <= x <= 1125*LARGEUR/1920 and 515*HAUTEUR/1080 <= y <= 610*HAUTEUR/1080:
                         pause = False
                         pygame.mixer.music.unpause()
                         menu.options.parametre(screen,HAUTEUR,LARGEUR)
                         return True
-                    if 900*LARGEUR/1920 <= x <= 1020*LARGEUR/1920 and 350*HAUTEUR/1080 <= y <= 390*HAUTEUR/1080:
+                    elif 795*LARGEUR/1920 <= x <= 1125*LARGEUR/1920 and 255*HAUTEUR/1080 <= y <= 358*HAUTEUR/1080:
                         pause = False
                         pygame.mixer.music.unpause()
                         return True
+                    elif 795*LARGEUR/1920 <= x <= 1125*LARGEUR/1920 and 390*HAUTEUR/1080 <= y <= 485*HAUTEUR/1080:
+                        image_PauseFond = pygame.image.load('menu\\image\\pauses.png')
+                        testtemporaire = "Default"
+                        with open('donnee\\sauvegarde.txt', 'w') as file:
+                            for i in range (len(stocke)):
+                                if testtemporaire == "Default":
+                                    text_a_ecrire = "{}\n".format(stocke[i])
+                                    if stocke[i] == "ID de Zone:":
+                                        testtemporaire = "ZONEID"
+                                        file.write(text_a_ecrire)
+                                    else:
+                                        file.write(text_a_ecrire)
+                                elif testtemporaire == "ZONEID":
+                                    file.write("{};{};{}\n".format(zone,posx,posy))
+                                    testtemporaire = "Default"
