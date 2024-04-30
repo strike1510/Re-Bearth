@@ -12,5 +12,4 @@ with open('donnee\\sauvegarde.txt', 'w') as file:
     file.write("\nsac:")
     file.write("\nNULL;NULL;NULL;LOCK;LOCK;LOCK;LOCK;LOCK;LOCK")
     file.write("\nTouches:")
-    file.write("\n0b11010;0b100;0b10110;0b111")
-    
+    file.write("\n0b11010;0b100;0b10110;0b111;0b101100;0b1000")

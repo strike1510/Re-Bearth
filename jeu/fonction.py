@@ -15,17 +15,18 @@ imagesgauche = [pygame.image.load("jeu\\image\\player\\gauche.png")]
 # Ensuite il y a la vitesse qui est définie dans le main 
 # Il y a 'perso' qui permet de mettre le skin du joueur (0 = par défaut)
 
-with open('donnee\\sauvegarde.txt', 'r') as file:
-    stocke = []
-    for line in file:
-        stocke.append(line.replace("\n",""))
 
-for i in range(len(stocke)):
-    if stocke[i] == "Touches:":
-        TOUCHE_ID = stocke[i+1].split(";")
 
 dimmension_perso = 64
 def deplacement(touchepressed,key, PLAYER, VITESSE, perso, colision_background, HAUTEUR, LARGEUR, last, index_image):
+    with open('donnee\\sauvegarde.txt', 'r') as file:
+        stocke = []
+        for line in file:
+            stocke.append(line.replace("\n",""))
+
+    for i in range(len(stocke)):
+        if stocke[i] == "Touches:":
+            TOUCHE_ID = stocke[i+1].split(";")
     collision_colors = [(206, 2, 207, 255), (205, 2, 206, 255), (178, 0, 255, 255)]
     imageplayer = imagesbas[0]
     if touchepressed == [TOUCHE_ID[1]]:

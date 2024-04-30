@@ -90,15 +90,6 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         pygame.draw.rect(player, (0, 0, 255), player.get_rect(), 3)  
         screen.blit(imageplayer, player_rect)
         
-        portemaison = jeu.fonction.EntryZone1600(player_rect.x,player_rect.y,550,700,600,660,HAUTEUR,LARGEUR)
-        if portemaison == True:
-            image_porte = image_porte_open
-            if key[pygame.K_SPACE] == True:
-                jeu.room1.Jeuroom1(screen, 670*LARGEUR/1920, 735*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
-                running = False
-        else:
-            image_porte = image_porte_close
-        
         
         if jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,1920,680,1835,825,HAUTEUR,LARGEUR):
             jeu.room2.Jeuroom2(screen, 150*LARGEUR/1920, 765*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
@@ -117,10 +108,28 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
             binary_values = [bin(key_index) for key_index in pressed_keys_indices]
         else:
             binary_values = ['0']
+        
         depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image)
         imageplayer = depinfo[0]
         last = depinfo[1]
         index_image = depinfo[2]
+
+        portemaison = jeu.fonction.EntryZone1600(player_rect.x,player_rect.y,550,700,600,660,HAUTEUR,LARGEUR)
+        if portemaison == True:
+            image_porte = image_porte_open
+            with open('donnee\\sauvegarde.txt', 'r') as file:
+                stocke = []
+                for line in file:
+                    stocke.append(line.replace("\n",""))
+
+            for i in range(len(stocke)):
+                if stocke[i] == "Touches:":
+                    TOUCHE_ID = stocke[i+1].split(";")
+            if TOUCHE_ID[4] in binary_values:
+                jeu.room1.Jeuroom1(screen, 670*LARGEUR/1920, 735*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+                running = False
+        else:
+            image_porte = image_porte_close
         
         #   Code pour pause :
         if key[pygame.K_ESCAPE] == True:

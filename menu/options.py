@@ -11,7 +11,27 @@ def parametre(screen,HAUTEUR,LARGEUR):
     PauseFond.fill(TRANSPARENT)
     PauseFond_rect = PauseFond.get_rect(center=(960*LARGEUR/1920, 500*HAUTEUR/1080))
     imagePauseFond = pygame.image.load('menu\\image\\option.png')
+    bedit = pygame.Surface((50, 25), pygame.SRCALPHA)
+    bedit.fill(TRANSPARENT)
+    bedit1_rect = bedit.get_rect(center=(1050*LARGEUR/1920, 440*HAUTEUR/1080))
+    bedit2_rect = bedit.get_rect(center=(1050*LARGEUR/1920, 475*HAUTEUR/1080))
+    bedit3_rect = bedit.get_rect(center=(1050*LARGEUR/1920, 510*HAUTEUR/1080))
+    bedit4_rect = bedit.get_rect(center=(1050*LARGEUR/1920, 545*HAUTEUR/1080))
+    bedit5_rect = bedit.get_rect(center=(1050*LARGEUR/1920, 580*HAUTEUR/1080))
+    bedit6_rect = bedit.get_rect(center=(1050*LARGEUR/1920, 615*HAUTEUR/1080))
+    
+    imageedit = pygame.image.load('menu\\image\\edit.png')
     image_PauseFond = pygame.transform.scale(imagePauseFond, (440*LARGEUR/1920, 540*HAUTEUR/1080))
+
+    with open('donnee\\sauvegarde.txt', 'r') as file:
+        stocke = []
+        for line in file:
+            stocke.append(line.replace("\n",""))
+
+
+    for i in range(len(stocke)):
+        if stocke[i] == "Touches:":
+            TOUCHE_ID = stocke[i+1].split(";")
 
     class Bouton:
         def __init__(self):
@@ -38,11 +58,18 @@ def parametre(screen,HAUTEUR,LARGEUR):
     
     bouton = Bouton()
     clock = pygame.time.Clock()
+    Bselection = 0
     while pause == True:
         pygame.display.flip()
         key = pygame.key.get_pressed()
         pygame.draw.rect(PauseFond, (0, 0, 255), PauseFond.get_rect(), 3) 
         screen.blit(image_PauseFond, PauseFond_rect)
+        screen.blit(imageedit, bedit1_rect)
+        screen.blit(imageedit, bedit2_rect)
+        screen.blit(imageedit, bedit3_rect)
+        screen.blit(imageedit, bedit4_rect)
+        screen.blit(imageedit, bedit5_rect)
+        screen.blit(imageedit, bedit6_rect)
         
         if key[pygame.K_ESCAPE] == True:
             if test == True:
@@ -64,6 +91,7 @@ def parametre(screen,HAUTEUR,LARGEUR):
         
         
         for event in pygame.event.get():
+            
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
                 print(x,y)
@@ -72,8 +100,49 @@ def parametre(screen,HAUTEUR,LARGEUR):
                 if 870*LARGEUR/1920 <= x <= 1045*LARGEUR/1920 and 670*HAUTEUR/1080 <= y <= 715*HAUTEUR/1080:
                     pause = False
                     return True
+                if bedit1_rect.collidepoint(event.pos):
+                    Bselection = 1
+                elif bedit2_rect.collidepoint(event.pos):
+                    Bselection = 3
+                elif bedit3_rect.collidepoint(event.pos):
+                    Bselection = 2
+                elif bedit4_rect.collidepoint(event.pos):
+                    Bselection = 4
+                elif bedit5_rect.collidepoint(event.pos):
+                    Bselection = 5
+                elif bedit6_rect.collidepoint(event.pos):
+                    Bselection = 6
+                else:
+                    Bselection = 0
+
+                    
+           
             elif event.type == pygame.KEYDOWN:
-                touche = event.key
-                print(f"Touche pressée : {pygame.key.name(touche)}")
+                if Bselection > 0:
+                    keys = pygame.key.get_pressed()
+                    pressed_keys_indices = [i for i, v in enumerate(keys) if v]
+                    if len(pressed_keys_indices) > 0:
+                        binary_values = [bin(key_index) for key_index in pressed_keys_indices]
+                    else:
+                        binary_values = ['0']
+                    print(f"Touche pressée : {binary_values[0]}")
+                    print(TOUCHE_ID[Bselection-1])
+                    TOUCHE_ID[Bselection-1] = str(binary_values[0])
+                    testtemporaire = "Default"
+                    with open('donnee\\sauvegarde.txt', 'w') as file:
+                        for i in range (len(stocke)):
+                            if testtemporaire == "Default":
+                                text_a_ecrire = "{}\n".format(stocke[i])
+                                if stocke[i] == "Touches:":
+                                    testtemporaire = "T"
+                                    file.write(text_a_ecrire)
+                                else:
+                                    file.write(text_a_ecrire)
+                            elif testtemporaire == "T":
+                                print("test")
+                                file.write("{};{};{};{}\n".format(TOUCHE_ID[0],TOUCHE_ID[1],TOUCHE_ID[2],TOUCHE_ID[3]))
+                                testtemporaire = "Default"
+
+
         bouton.afficher()
         clock.tick(60)
