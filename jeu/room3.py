@@ -6,8 +6,8 @@ def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
     TRANSPARENT = (0, 0, 0, 0)
     dimmension_perso = 64
     
-    background = pygame.image.load("jeu\\image\\room2\\planvieux.png")
-    colision_background = pygame.image.load("jeu\\image\\room2\\CollisionMap.png")
+    background = pygame.image.load("jeu\\image\\room3\\bg.png")
+    colision_background = pygame.image.load("jeu\\image\\room3\\bg_collision.png")
     clock = pygame.time.Clock()
 
     #TEST 
@@ -73,13 +73,24 @@ def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         #   Code pour pause :
         if key[pygame.K_ESCAPE] == True:
             if testpause == False:
-                testquit = menu.pause.Pause(2,player_rect.x,player_rect.y,screen,HAUTEUR,LARGEUR)
+                testquit = menu.pause.Pause(3,player_rect.x,player_rect.y,screen,HAUTEUR,LARGEUR)
                 testpause = True
                 if testquit == False:
                     running = False
         else:
             testpause = False
+        if 840 < player_rect.x < 1045 and 970 < player_rect.y < 980:
+            with open('donnee\\sauvegarde.txt', 'r') as file:
+                stocke = []
+                for line in file:
+                    stocke.append(line.replace("\n",""))
 
+            for i in range(len(stocke)):
+                if stocke[i] == "Touches:":
+                    TOUCHE_ID = stocke[i+1].split(";")
+            if TOUCHE_ID[4] in binary_values:
+                jeu.room2.Jeuroom2(screen, 960*LARGEUR/1920, 600*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+                running = False
         
         clock.tick(30)
         

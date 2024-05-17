@@ -61,45 +61,17 @@ pygame.quit()
 '''
 import pygame
 
-# Initialisation de Pygame
+# Initialiser Pygame
 pygame.init()
 
-# Couleurs
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-GRAY = (200, 200, 200)
+# Définir la taille de la fenêtre
+screen_width = 800
+screen_height = 600
 
-# Initialisation de la fenêtre
-screen = pygame.display.set_mode((400, 300))
-pygame.display.set_caption("Bouton avec texte")
+#Savoir le nombre d'écran
+num_screens = pygame.display.get_num_displays()
 
-# Initialisation de la police
-font = pygame.font.Font(None, 36)
+# Choisir l'écran cible (index 1 dans cet exemple)
+screen = pygame.display.set_mode((screen_width, screen_height), 0, display=0)
 
-# Texte initial
-text_value = "Cliquez ici"
-
-# Position et taille du bouton
-button_rect = pygame.Rect(100, 100, 200, 50)
-
-# Boucle principale
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            if button_rect.collidepoint(event.pos):
-                # Changer la valeur du texte lors du clic
-                text_value = "Nouvelle valeur"
-
-    # Affichage du bouton
-    screen.fill(WHITE)
-    pygame.draw.rect(screen, GRAY, button_rect)
-    text = font.render(text_value, True, BLACK)
-    text_rect = text.get_rect(center=button_rect.center)
-    screen.blit(text, text_rect)
-
-    pygame.display.flip()
-
-pygame.quit()
+# ...

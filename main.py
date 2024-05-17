@@ -13,7 +13,7 @@ import menu.menu
 import menu.pause
 import jeu.fonction
 import jeu.game
-import jeu.room1,jeu.room2
+import jeu.room1,jeu.room2,jeu.room3
 
 
 from pygame.locals import *
@@ -62,5 +62,7 @@ if test:
         jeu.game.LancementJeu(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR)
     elif ZONE_ID[0] == "2":
         jeu.room2.Jeuroom2(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR)
+    elif ZONE_ID[0] == "3":
+        jeu.room3.Jeuroom3(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR)
 
 pygame.quit()
