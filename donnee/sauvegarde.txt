@@ -1,7 +1,7 @@
 LvL:
 1
 ID de Zone:
-3;943;882
+-1;0;0
 Money:
 0
 Niveau de Quetes:
