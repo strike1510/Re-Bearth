@@ -94,7 +94,7 @@ def Jeuroom1(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
                                 else:
                                     file.write("0;1068;455\n")
                                     testtemporaire = False
-                        jeu.room1.Jeuroom1(screen, 1100*LARGEUR/1920, 335*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+                        jeu.room1.Jeuroom1(screen, 1100*LARGEUR/1920, 485*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
                         running = False
         keys = pygame.key.get_pressed()
         pressed_keys_indices = [i for i, v in enumerate(keys) if v]

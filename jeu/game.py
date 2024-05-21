@@ -1,4 +1,4 @@
-import pygame, sys , jeu.room1 , jeu.room2 , jeu.combat.battle, menu.pause , math , jeu.fonction
+import pygame, sys , jeu.room1 , jeu.room2, jeu.room7 , jeu.room4, jeu.room6 , jeu.combat.battle, menu.pause , math , jeu.fonction
 def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
     testpause = False
     WHITE = (255, 255, 255)
@@ -94,6 +94,15 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         if jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,1920,680,1835,825,HAUTEUR,LARGEUR):
             jeu.room2.Jeuroom2(screen, 150*LARGEUR/1920, 765*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
             #jeu.combat.battle.battle(screen,0, 0,1,0,100,HAUTEUR,LARGEUR)
+            running = False
+        elif jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,1015,10,860,25,HAUTEUR,LARGEUR):
+            jeu.room4.Jeuroom4(screen, 950*LARGEUR/1920, 870*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+            running = False
+        elif jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,1040,990,930,1100,HAUTEUR,LARGEUR):
+            jeu.room6.Jeuroom6(screen, 1000*LARGEUR/1920, 130*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+            running = False
+        elif jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,20,330,0,470,HAUTEUR,LARGEUR):
+            jeu.room7.Jeuroom7(screen, 1800*LARGEUR/1920, 440*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
             running = False
         
         #print(colision_background.get_at((player_rect.x, player_rect.y)))

@@ -1,13 +1,13 @@
-import pygame, sys , jeu.room2 , menu.pause , math , jeu.fonction
-def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
+import pygame, sys , jeu.game , jeu.room7 , menu.pause , math , jeu.fonction
+def Jeuroom8(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
     testpause = False
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
     TRANSPARENT = (0, 0, 0, 0)
     dimmension_perso = 64
     
-    background = pygame.image.load("jeu\\image\\room3\\bg.png")
-    colision_background = pygame.image.load("jeu\\image\\room3\\bg_collision.png")
+    background = pygame.image.load("jeu\\image\\room8\\map_04.png")
+    colision_background = pygame.image.load("jeu\\image\\room8\\map_04col.png")
     clock = pygame.time.Clock()
 
     #TEST 
@@ -49,7 +49,7 @@ def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         screen.blit(imageplayer, player_rect)
         
         
-        #print(colision_background.get_at((player_rect.x, player_rect.y)))
+        print(player_rect.x, player_rect.y)
         
         for event in pygame.event.get():
             
@@ -70,24 +70,15 @@ def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         #   Code pour pause :
         if key[pygame.K_ESCAPE] == True:
             if testpause == False:
-                testquit = menu.pause.Pause(3,player_rect.x,player_rect.y,screen,HAUTEUR,LARGEUR)
+                testquit = menu.pause.Pause(8,player_rect.x,player_rect.y,screen,HAUTEUR,LARGEUR)
                 testpause = True
                 if testquit == False:
                     running = False
         else:
             testpause = False
-        if 840 < player_rect.x < 1045 and 970 < player_rect.y < 1000:
-            with open('donnee\\sauvegarde.txt', 'r') as file:
-                stocke = []
-                for line in file:
-                    stocke.append(line.replace("\n",""))
-
-            for i in range(len(stocke)):
-                if stocke[i] == "Touches:":
-                    TOUCHE_ID = stocke[i+1].split(";")
-            if TOUCHE_ID[4] in binary_values:
-                jeu.room2.Jeuroom2(screen, 960*LARGEUR/1920, 600*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
-                running = False
+        if 1840 < player_rect.x < 1900 and 330 < player_rect.y < 460:
+            jeu.room7.Jeuroom7(screen, 100*LARGEUR/1920, 420*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+            running = False
         
         clock.tick(30)
         

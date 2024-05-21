@@ -13,7 +13,7 @@ import menu.menu
 import menu.pause
 import jeu.fonction
 import jeu.game
-import jeu.room1,jeu.room2,jeu.room3
+import jeu.room1,jeu.room2,jeu.room3,jeu.room4,jeu.room5, jeu.room6, jeu.room7
 
 
 from pygame.locals import *
@@ -55,7 +55,7 @@ if test:
     pygame.mixer.music.load("jeu\\sons\\jeu33.mp3")
     pygame.mixer.music.play(-1)
     if ZONE_ID[0] == "-1":
-        jeu.room1.Jeuroom1(screen, 1100*LARGEUR/1920, 335*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+        jeu.room1.Jeuroom1(screen, 1100*LARGEUR/1920, 485*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
     elif ZONE_ID[0] == "0":
         jeu.room1.Jeuroom1(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR)
     elif ZONE_ID[0] == "1":
@@ -64,5 +64,15 @@ if test:
         jeu.room2.Jeuroom2(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR)
     elif ZONE_ID[0] == "3":
         jeu.room3.Jeuroom3(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR)
+    elif ZONE_ID[0] == "4":
+        jeu.room4.Jeuroom4(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR)
+    elif ZONE_ID[0] == "5":
+        jeu.room5.Jeuroom5(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR)
+    elif ZONE_ID[0] == "6":
+        jeu.room6.Jeuroom6(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR)
+    elif ZONE_ID[0] == "7":
+        jeu.room7.Jeuroom7(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR)
+    elif ZONE_ID[0] == "8":
+        jeu.room8.Jeuroom8(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR)
 
 pygame.quit()
