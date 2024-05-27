@@ -49,7 +49,7 @@ def Jeuroom8(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         screen.blit(imageplayer, player_rect)
         
         
-        print(player_rect.x, player_rect.y)
+        #print(player_rect.x, player_rect.y)
         
         for event in pygame.event.get():
             
