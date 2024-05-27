@@ -1,6 +1,6 @@
 import jeu.game
 import pygame, sys , jeu.game , menu.pause , math , jeu.fonction
-def Jeuroom6(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
+def Jeuroom6(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
     testpause = False
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
@@ -9,7 +9,7 @@ def Jeuroom6(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
     
     background = pygame.image.load("jeu\\image\\room6\\map_05.png")
     colision_background = pygame.image.load("jeu\\image\\room6\\map_05col.png")
-    imagesvagues = [pygame.image.load(f"jeu\\image\\room6\\map_05_V{i}.png") for i in range(1, 4)]
+    imagesvagues = [pygame.image.load(f"jeu\\image\\room6\\map_05_V{i}.png") for i in range(1, 5)]
     clock = pygame.time.Clock()
 
     #TEST 
@@ -27,7 +27,7 @@ def Jeuroom6(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
     player_rect = player.get_rect(center=(pos_player_x,pos_player_y))
 
     #Image joueur :
-    imagesbas = pygame.image.load("jeu\\image\\player\\devant.png")
+    imagesbas = pygame.image.load("jeu\\image\\player\\devant1.png")
     imageplayer = imagesbas
     
 
@@ -49,23 +49,19 @@ def Jeuroom6(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         screen_x = rect_x - LARGEUR / 2
         screen_y = rect_y - HAUTEUR / 2
         screen.blit(background, (screen_x, screen_y))
-        screen.blit(imagesvagues[index_vague_image], (screen_x, screen_y))
+        screen.blit(imagesvagues[index_vague_image], (0, 0))
         pygame.draw.rect(player, (0, 0, 255), player.get_rect(), 3)  
         screen.blit(imageplayer, player_rect)
         
         #print(player_rect.x, player_rect.y)
 
-        rep_image = rep_image + 1
-        if rep_image > 120:
+        #afficher les vagues
+
+        if rep_image > 116:
             rep_image =0
-        elif rep_image > 90:
-            index_vague_image = 1
-        elif rep_image > 60:
-            index_vague_image = 0
-        elif rep_image > 30:
-            index_vague_image = 1
-        elif rep_image > 0:
-            index_vague_image = 2
+        else:
+            rep_image+=1
+        index_vague_image = math.floor((rep_image) / 30)
         
         
         for event in pygame.event.get():
@@ -79,7 +75,7 @@ def Jeuroom6(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
             binary_values = [bin(key_index) for key_index in pressed_keys_indices]
         else:
             binary_values = ['0']
-        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image)
+        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, 18, 0, colision_background, HAUTEUR, LARGEUR, last, index_image, 128)
         imageplayer = depinfo[0]
         last = depinfo[1]
         index_image = depinfo[2]
@@ -93,11 +89,11 @@ def Jeuroom6(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
                     running = False
         else:
             testpause = False
-        if 975 < player_rect.x < 1025 and 0 < player_rect.y < 60:
-            jeu.game.LancementJeu(screen,990*LARGEUR/1920,950*HAUTEUR/1080,VITESSE, HAUTEUR,LARGEUR)
+        if 975*LARGEUR/1920 < player_rect.x < 1025*LARGEUR/1920 and 0 < player_rect.y < 60:
+            jeu.game.LancementJeu(screen,990*LARGEUR/1920,950*HAUTEUR/1080,VITESSE, HAUTEUR,LARGEUR, CLOCK)
             running = False
         
-        clock.tick(30)
+        clock.tick(CLOCK)
         
 
         

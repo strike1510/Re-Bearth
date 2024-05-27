@@ -1,5 +1,5 @@
 import pygame, sys , jeu.room2 , menu.pause , math , jeu.fonction
-def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
+def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR, CLOCK):
     testpause = False
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
@@ -25,7 +25,7 @@ def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
     player_rect = player.get_rect(center=(pos_player_x,pos_player_y))
 
     #Image joueur :
-    imagesbas = pygame.image.load("jeu\\image\\player\\devant.png")
+    imagesbas = pygame.image.load("jeu\\image\\player\\devant1.png")
     imageplayer = imagesbas
     
 
@@ -62,7 +62,7 @@ def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
             binary_values = [bin(key_index) for key_index in pressed_keys_indices]
         else:
             binary_values = ['0']
-        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image)
+        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, 18, 0, colision_background, HAUTEUR, LARGEUR, last, index_image, 128)
         imageplayer = depinfo[0]
         last = depinfo[1]
         index_image = depinfo[2]
@@ -86,10 +86,10 @@ def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
                 if stocke[i] == "Touches:":
                     TOUCHE_ID = stocke[i+1].split(";")
             if TOUCHE_ID[4] in binary_values:
-                jeu.room2.Jeuroom2(screen, 960*LARGEUR/1920, 600*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+                jeu.room2.Jeuroom2(screen, 960*LARGEUR/1920, 600*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
                 running = False
         
-        clock.tick(30)
+        clock.tick(CLOCK)
         
 
         

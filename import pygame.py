@@ -1,77 +1,46 @@
-'''
-with open('donnee\\sauvegarde.txt', 'r') as file:
-    stocke = []
-    for line in file:
-        stocke.append(line.replace("\n",""))
-
-print(stocke[0])
-
-with open('donnee\\sauvegarde.txt', 'w') as file:
-    for i in range (len(stocke)):
-        file.write(stocke[i])
-
-
-with open('donnee\\sauvegarde.txt', 'w') as file:
-    file.write("Pseudo:\n")
-    file.write("\n")
-    file.write("LvL:\n")
-    file.write("\n")
-    file.write("Money:")
-    file.write("\n")
-
-    
-
-pygame.mixer.init()
-
-# Charger les fichiers audio
-son1 = pygame.mixer.Sound('son1.wav')
-son2 = pygame.mixer.Sound('son2.wav')
-
-# Jouer les deux sons simultanément
-son1.play()
-son2.play()
-
 import pygame
-import os
 
-pygame.init()
-
-# Définition de la taille de la fenêtre
-largeur = 800
-hauteur = 600
-taille_fenetre = (largeur, hauteur)
-
-# Création de la fenêtre
-fenetre = pygame.display.set_mode(taille_fenetre)
-
-# icône
-chemin_icone = os.path.join("menu", "image", "icone.ico")  
-icone = pygame.image.load(chemin_icone)
-pygame.display.set_icon(icone)
-
-
-en_cours = True
-while en_cours:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            en_cours = False
-
-
-pygame.quit()
-'''
-import pygame
+# Définir la résolution de référence
+REFERENCE_WIDTH = 1600
+REFERENCE_HEIGHT = 1024
 
 # Initialiser Pygame
 pygame.init()
 
-# Définir la taille de la fenêtre
-screen_width = 800
-screen_height = 600
+# Créer la fenêtre avec la résolution de référence
+screen = pygame.display.set_mode((REFERENCE_WIDTH, REFERENCE_HEIGHT))
+pygame.display.set_caption("Jeu 2D")
 
-#Savoir le nombre d'écran
-num_screens = pygame.display.get_num_displays()
+# Récupérer la taille de la fenêtre
+window_width, window_height = screen.get_size()
 
-# Choisir l'écran cible (index 1 dans cet exemple)
-screen = pygame.display.set_mode((screen_width, screen_height), 0, display=0)
+# Calculer le facteur d'échelle
+scale_x = window_width / REFERENCE_WIDTH
+scale_y = window_height / REFERENCE_HEIGHT
 
-# ...
+# Boucle principale du jeu
+running = True
+while running:
+    # Gérer les événements
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Effacer l'écran
+    screen.fill((0, 0, 0))
+
+    # Dessiner les éléments du jeu en utilisant les coordonnées normalisées
+    # et le facteur d'échelle pour les adapter à la taille de la fenêtre
+    x = 0.25
+    y = 0.5
+    width = 0.1
+    height = 0.2
+    pygame.draw.rect(screen, (255, 0, 0),
+                    (x * window_width, y * window_height,
+                     width * window_width, height * window_height))
+
+    # Mettre à jour l'affichage
+    pygame.display.flip()
+
+# Quitter Pygame
+pygame.quit()

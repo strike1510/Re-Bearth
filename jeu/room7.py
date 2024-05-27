@@ -1,5 +1,5 @@
 import pygame, sys , jeu.game , jeu.room5 , jeu.room8 , menu.pause , math , jeu.fonction
-def Jeuroom7(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
+def Jeuroom7(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
     testpause = False
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
@@ -25,7 +25,7 @@ def Jeuroom7(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
     player_rect = player.get_rect(center=(pos_player_x,pos_player_y))
 
     #Image joueur :
-    imagesbas = pygame.image.load("jeu\\image\\player\\devant.png")
+    imagesbas = pygame.image.load("jeu\\image\\player\\devant1.png")
     imageplayer = imagesbas
     
 
@@ -61,7 +61,7 @@ def Jeuroom7(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
             binary_values = [bin(key_index) for key_index in pressed_keys_indices]
         else:
             binary_values = ['0']
-        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image)
+        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image, 64)
         imageplayer = depinfo[0]
         last = depinfo[1]
         index_image = depinfo[2]
@@ -76,13 +76,13 @@ def Jeuroom7(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         else:
             testpause = False
         if 1840 < player_rect.x < 1900 and 330 < player_rect.y < 460:
-            jeu.game.LancementJeu(screen, 100*LARGEUR/1920, 420*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+            jeu.game.LancementJeu(screen, 100*LARGEUR/1920, 420*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
             running = False
         elif 0 < player_rect.x < 20 and 340 < player_rect.y < 500:
-            jeu.room8.Jeuroom8(screen, 1800*LARGEUR/1920, 420*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+            jeu.room8.Jeuroom8(screen, 1800*LARGEUR/1920, 420*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
             running = False
         
-        clock.tick(30)
+        clock.tick(CLOCK)
         
 
         

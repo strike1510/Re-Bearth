@@ -1,4 +1,4 @@
-import pygame, sys, time, menu.options
+import pygame, sys, time, menu.options, jeu.fonction
 WHITE = (255, 255, 255)
 TRANSPARENT = (255, 255, 255, 20)
 BLACK = (0, 0, 0)
@@ -7,11 +7,11 @@ def Pause(zone,posx,posy,screen,HAUTEUR,LARGEUR):
     pause = True
     test = False
 
-    PauseFond = pygame.Surface((440*LARGEUR/1920, 540*HAUTEUR/1080), pygame.SRCALPHA)
+    PauseFond = pygame.Surface((LARGEUR, HAUTEUR), pygame.SRCALPHA)
     PauseFond.fill(TRANSPARENT)
-    PauseFond_rect = PauseFond.get_rect(center=(960*LARGEUR/1920, 500*HAUTEUR/1080))
-    imagePauseFond = pygame.image.load('menu\\image\\pause.png')
-    image_PauseFond = pygame.transform.scale(imagePauseFond, (440*LARGEUR/1920, 540*HAUTEUR/1080))
+    imagePauseFond = jeu.fonction.redimensionner_image('menu\\image\\pause.png', LARGEUR, HAUTEUR)
+    imagepausesaved = jeu.fonction.redimensionner_image('menu\\image\\pauses.png', LARGEUR, HAUTEUR)
+    
 
     with open('donnee\\sauvegarde.txt', 'r') as file:
         stocke = []
@@ -23,7 +23,7 @@ def Pause(zone,posx,posy,screen,HAUTEUR,LARGEUR):
         pygame.display.flip()
         key = pygame.key.get_pressed()
         pygame.draw.rect(PauseFond, (0, 0, 255), PauseFond.get_rect(), 3) 
-        screen.blit(image_PauseFond, PauseFond_rect)
+        screen.blit(imagePauseFond, (0,0))
         if key[pygame.K_ESCAPE] == True:
             if test == True:
                 pause = False
@@ -47,7 +47,7 @@ def Pause(zone,posx,posy,screen,HAUTEUR,LARGEUR):
                         pygame.mixer.music.unpause()
                         return True
                     elif 795*LARGEUR/1920 <= x <= 1125*LARGEUR/1920 and 390*HAUTEUR/1080 <= y <= 485*HAUTEUR/1080:
-                        image_PauseFond = pygame.image.load('menu\\image\\pauses.png')
+                        imagePauseFond = imagepausesaved
                         testtemporaire = "Default"
                         with open('donnee\\sauvegarde.txt', 'w') as file:
                             for i in range (len(stocke)):

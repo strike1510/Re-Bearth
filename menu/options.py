@@ -1,4 +1,4 @@
-import pygame
+import pygame, jeu.fonction
 WHITE = (255, 255, 255)
 TRANSPARENT = (255, 255, 255, 20)
 BLACK = (0, 0, 0)
@@ -10,7 +10,7 @@ def parametre(screen,HAUTEUR,LARGEUR):
     PauseFond = pygame.Surface((440*LARGEUR/1920, 540*HAUTEUR/1080), pygame.SRCALPHA)
     PauseFond.fill(TRANSPARENT)
     PauseFond_rect = PauseFond.get_rect(center=(960*LARGEUR/1920, 500*HAUTEUR/1080))
-    imagePauseFond = pygame.image.load('menu\\image\\option.png')
+    imagePauseFond = jeu.fonction.redimensionner_image('menu\\image\\option.png', LARGEUR, HAUTEUR)
     bedit = pygame.Surface((50, 25), pygame.SRCALPHA)
     bedit.fill(TRANSPARENT)
     bedit1_rect = bedit.get_rect(center=(1050*LARGEUR/1920, 440*HAUTEUR/1080))

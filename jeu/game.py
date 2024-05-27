@@ -1,5 +1,5 @@
 import pygame, sys , jeu.room1 , jeu.room2, jeu.room7 , jeu.room4, jeu.room6 , jeu.combat.battle, menu.pause , math , jeu.fonction
-def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
+def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
     testpause = False
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
@@ -37,18 +37,12 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
     player_rect = player.get_rect(center=(pos_player_x,pos_player_y))
 
     #Image joueur :
-    imagesbas = pygame.image.load("jeu\\image\\player\\devant.png")
+    imagesbas = pygame.image.load("jeu\\image\\player\\devant1.png")
     imageplayer = imagesbas
 
     image_porte_close = pygame.image.load('jeu\\image\\porte_close.png')
     image_porte_open = pygame.image.load('jeu\\image\\porte.png')
     image_porte = image_porte_close
-
-    def draw_text(text, font, color, surface, x, y):
-        text_obj = font.render(text, True, color)
-        text_rect = text_obj.get_rect()
-        text_rect.center = (x, y)
-        surface.blit(text_obj, text_rect)
     
     with open('donnee\\sauvegarde.txt', 'r') as file:
         stocke = []
@@ -92,17 +86,17 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         
         
         if jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,1920,680,1835,825,HAUTEUR,LARGEUR):
-            jeu.room2.Jeuroom2(screen, 150*LARGEUR/1920, 765*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+            jeu.room2.Jeuroom2(screen, 150*LARGEUR/1920, 815*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
             #jeu.combat.battle.battle(screen,0, 0,1,0,100,HAUTEUR,LARGEUR)
             running = False
         elif jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,1015,10,860,25,HAUTEUR,LARGEUR):
-            jeu.room4.Jeuroom4(screen, 950*LARGEUR/1920, 870*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+            jeu.room4.Jeuroom4(screen, 950*LARGEUR/1920, 870*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
             running = False
         elif jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,1040,990,930,1100,HAUTEUR,LARGEUR):
-            jeu.room6.Jeuroom6(screen, 1000*LARGEUR/1920, 130*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+            jeu.room6.Jeuroom6(screen, 1000*LARGEUR/1920, 130*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
             running = False
         elif jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,20,330,0,470,HAUTEUR,LARGEUR):
-            jeu.room7.Jeuroom7(screen, 1800*LARGEUR/1920, 440*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+            jeu.room7.Jeuroom7(screen, 1800*LARGEUR/1920, 440*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
             running = False
         
         #print(colision_background.get_at((player_rect.x, player_rect.y)))
@@ -118,7 +112,7 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
         else:
             binary_values = ['0']
         
-        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image)
+        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image, 64)
         imageplayer = depinfo[0]
         last = depinfo[1]
         index_image = depinfo[2]
@@ -135,7 +129,7 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
                 if stocke[i] == "Touches:":
                     TOUCHE_ID = stocke[i+1].split(";")
             if TOUCHE_ID[4] in binary_values:
-                jeu.room1.Jeuroom1(screen, 670*LARGEUR/1920, 735*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR)
+                jeu.room1.Jeuroom1(screen, 670*LARGEUR/1920, 735*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
                 running = False
         else:
             image_porte = image_porte_close
@@ -151,7 +145,7 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR):
             testpause = False
 
         
-        clock.tick(30)
+        clock.tick(CLOCK)
         
 
         
