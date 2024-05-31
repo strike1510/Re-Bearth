@@ -31,6 +31,7 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK
     pnj_recto = pnj.get_rect(center=(40*LARGEUR/1920, 470*HAUTEUR/1080))
     pnj_rects = pnj.get_rect(center=(940*LARGEUR/1920, 1030*HAUTEUR/1080))
     imagespnj = [pygame.image.load(f"jeu\\image\\pnj\\pnj01\\pnj{i}.png") for i in range(1, 5)]
+    imagesblocado = [pygame.image.load(f"jeu\\image\\quete\\blocado{i}.png") for i in range(1, 4)]
 
     player = pygame.Surface((dimmension_perso, dimmension_perso), pygame.SRCALPHA)
     player.fill(TRANSPARENT)
@@ -84,23 +85,31 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK
         pygame.draw.rect(player, (0, 0, 255), player.get_rect(), 3)  
         screen.blit(imageplayer, player_rect)
         
-        
+        action_terrain = NivQuete.split(":")
         if jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,1920,680,1835,825,HAUTEUR,LARGEUR):
             jeu.room2.Jeuroom2(screen, 150*LARGEUR/1920, 815*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
             #jeu.combat.battle.battle(screen,0, 0,1,0,100,HAUTEUR,LARGEUR)
             running = False
-        elif jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,1015,10,860,25,HAUTEUR,LARGEUR):
-            jeu.room4.Jeuroom4(screen, 950*LARGEUR/1920, 870*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
-            running = False
-        elif jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,1040,990,930,1100,HAUTEUR,LARGEUR):
-            jeu.room6.Jeuroom6(screen, 1000*LARGEUR/1920, 130*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
-            running = False
-        elif jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,20,330,0,470,HAUTEUR,LARGEUR):
-            jeu.room7.Jeuroom7(screen, 1800*LARGEUR/1920, 440*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
-            running = False
+        if jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,1015,0,860,25,HAUTEUR,LARGEUR):
+            if int(action_terrain[0]) > 0:
+                jeu.room4.Jeuroom4(screen, 950*LARGEUR/1920, 870*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
+                running = False
+            else:
+                screen.blit(imagesblocado[0], (0,0))
+        if jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,1040,990,930,1100,HAUTEUR,LARGEUR):
+            if int(action_terrain[0]) > 0:
+                jeu.room6.Jeuroom6(screen, 1000*LARGEUR/1920, 130*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
+                running = False
+            else:
+                screen.blit(imagesblocado[2], (0,0))
+        if jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,20,330,0,470,HAUTEUR,LARGEUR):
+            if int(action_terrain[0]) > 0:
+                jeu.room7.Jeuroom7(screen, 1800*LARGEUR/1920, 440*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
+                running = False
+            else:
+                screen.blit(imagesblocado[1], (0,0))
         
         #print(colision_background.get_at((player_rect.x, player_rect.y)))
-        touchepressed = "none"
         for event in pygame.event.get():
             
             if event.type == pygame.QUIT:

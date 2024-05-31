@@ -1,13 +1,4 @@
-import pygame, math
-
-
-#Image joueur :
-
-# Skin 0 :
-imagesdroite = [pygame.image.load(f"jeu\\image\\player\\droite{i}.png") for i in range(2, 6)]
-imageshaut = [pygame.image.load(f"jeu\\image\\player\\derriere{i}.png") for i in range(2, 6)]
-imagesbas = [pygame.image.load(f"jeu\\image\\player\\devant{i}.png") for i in range(2, 6)]
-imagesgauche = [pygame.image.load(f"jeu\\image\\player\\gauche{i}.png") for i in range(2, 6)]
+import pygame, math, time
 
 # Fonctionalité :
 # appeller la fonction deplacement() pour stocker les infos de deplacement d'image
@@ -32,6 +23,11 @@ def redimensionner_image(image_path, max_width, max_height):
     return image_redimensionnee
 
 def deplacement(touchepressed,key, PLAYER, VITESSE, perso, colision_background, HAUTEUR, LARGEUR, last, index_image, SCALE):
+    # Skin 0 :
+    imagesdroite = [pygame.image.load(f"jeu\\image\\player\\droite{i}.png") for i in range(2, 6)]
+    imageshaut = [pygame.image.load(f"jeu\\image\\player\\derriere{i}.png") for i in range(2, 6)]
+    imagesbas = [pygame.image.load(f"jeu\\image\\player\\devant{i}.png") for i in range(2, 6)]
+    imagesgauche = [pygame.image.load(f"jeu\\image\\player\\gauche{i}.png") for i in range(2, 6)]
     dimmension_perso = SCALE
     with open('donnee\\sauvegarde.txt', 'r') as file:
         stocke = []
@@ -188,3 +184,37 @@ def EntryZone1920(x,y,zonex1,zoney1,zonex2,zoney2,HAUTEUR,LARGEUR):
         return True
     else:
         return False
+
+def save(zone,posx,posy,addquette):
+    with open('donnee\\sauvegarde.txt', 'r') as file:
+        stocke = []
+        for line in file:
+            stocke.append(line.replace("\n",""))
+    quette = addquette.split(":")
+    for k in range(len(stocke)):
+        if stocke[k] == "Niveau de Quetes:":
+            queteID = stocke[k+1].split(":")
+    for j in range(0,5):
+        queteID[j] = int(queteID[j])
+        if quette[j] != 0:
+            queteID[j]+= int(quette[j])
+            
+    with open('donnee\\sauvegarde.txt', 'w') as file:   
+        for i in range(len(stocke)):
+            if stocke[i] == "Niveau de Quetes:":
+                stocke[i+1] = "{}:{}:{}:{}:{}".format(queteID[0],queteID[1],queteID[2],queteID[3],queteID[4])
+            elif stocke[i] == "ID de Zone:":
+                stocke[i+1] = "{};{};{}".format(zone,posx,posy)
+            text_a_ecrire = "{}\n".format(stocke[i])
+            print
+            file.write(text_a_ecrire)
+
+def chargement(screen,temp):
+    if temp == 1:
+        imagesload = [pygame.transform.scale(pygame.image.load(f"jeu\\image\\load\\load1\\load{i}.png"), (1920,1080)) for i in range(1, 5)]
+        for j in range(0,1):
+            for i in range(0,4):
+                screen.blit(imagesload[i], (0,0))
+                pygame.display.update()
+                pygame.display.flip()
+                time.sleep(1)

@@ -94,7 +94,6 @@ def parametre(screen,HAUTEUR,LARGEUR):
             
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
-                print(x,y)
                 if x > 820*LARGEUR/1920 and x < 1100*LARGEUR/1920 and y > 275*HAUTEUR/1080 and y < 310*HAUTEUR/1080: 
                     bouton.deplacer(newx)
                 if 870*LARGEUR/1920 <= x <= 1045*LARGEUR/1920 and 670*HAUTEUR/1080 <= y <= 715*HAUTEUR/1080:
@@ -139,8 +138,7 @@ def parametre(screen,HAUTEUR,LARGEUR):
                                 else:
                                     file.write(text_a_ecrire)
                             elif testtemporaire == "T":
-                                print("test")
-                                file.write("{};{};{};{}\n".format(TOUCHE_ID[0],TOUCHE_ID[1],TOUCHE_ID[2],TOUCHE_ID[3]))
+                                file.write("{};{};{};{};{};{}\n".format(TOUCHE_ID[0],TOUCHE_ID[1],TOUCHE_ID[2],TOUCHE_ID[3],TOUCHE_ID[4],TOUCHE_ID[5]))
                                 testtemporaire = "Default"
 
 

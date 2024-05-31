@@ -1,10 +1,10 @@
-import pygame, sys , jeu.game, jeu.room3, jeu.room9 , menu.pause , math , jeu.fonction
-def Jeuroom2(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
+import pygame, sys , jeu.room11, jeu.room10 , menu.pause , math , jeu.fonction
+def Jeuroom9(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
     testpause = False
     TRANSPARENT = (0, 0, 0, 0)
     dimmension_perso = 64
     
-    background = pygame.transform.scale(pygame.image.load("jeu\\image\\room2\\planvieux.png"), (LARGEUR, HAUTEUR))
+    background = pygame.transform.scale(pygame.image.load("jeu\\image\\room2\\bgfutur.png"), (LARGEUR, HAUTEUR))
     colision_background = pygame.transform.scale(pygame.image.load("jeu\\image\\room2\\CollisionMap.png"), (LARGEUR, HAUTEUR))
     screen.blit(colision_background, (0,0))
     clock = pygame.time.Clock()
@@ -53,22 +53,16 @@ def Jeuroom2(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
         screen_x = rect_x - LARGEUR / 2
         screen_y = rect_y - HAUTEUR / 2
 
-        
         screen.blit(background, (screen_x, screen_y))
         screen.blit(image_porte, porte_rect)
         screen.blit(imageplayer, player_rect)
-
-        if NivQuete[0] == "0" and NivQuete[2] == "1":
-            jeu.fonction.chargement(screen,1)
-            jeu.room9.Jeuroom9(screen, player_rect.x*LARGEUR/1920, player_rect.y*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
-            running = False
 
         pygame.draw.rect(player, (0, 0, 255), player.get_rect(), 3)  
         
         
         
         if jeu.fonction.EntryZone1920(player_rect.x,player_rect.y,15,715,0,815,HAUTEUR,LARGEUR):
-            jeu.game.LancementJeu(screen,1750*LARGEUR/1920,770*HAUTEUR/1080,VITESSE, HAUTEUR,LARGEUR, CLOCK)
+            jeu.room11.Jeuroom11(screen,1750*LARGEUR/1920,770*HAUTEUR/1080,VITESSE, HAUTEUR,LARGEUR, CLOCK)
             running = False
         
         #print(colision_background.get_at((player_rect.x, player_rect.y)))
@@ -92,7 +86,7 @@ def Jeuroom2(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
         #   Code pour pause :
         if key[pygame.K_ESCAPE] == True:
             if testpause == False:
-                testquit = menu.pause.Pause(2,player_rect.x,player_rect.y,screen,HAUTEUR,LARGEUR)
+                testquit = menu.pause.Pause(9,player_rect.x,player_rect.y,screen,HAUTEUR,LARGEUR)
                 testpause = True
                 if testquit == False:
                     running = False
@@ -110,7 +104,7 @@ def Jeuroom2(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
                 if stocke[i] == "Touches:":
                     TOUCHE_ID = stocke[i+1].split(";")
             if TOUCHE_ID[4] in binary_values:
-                jeu.room3.Jeuroom3(screen, 975*LARGEUR/1920, 890*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
+                jeu.room10.Jeuroom10(screen, 975*LARGEUR/1920, 890*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
                 running = False
         else:
             image_porte = image_porte_close

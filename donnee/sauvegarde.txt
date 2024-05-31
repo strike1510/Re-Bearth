@@ -1,11 +1,11 @@
 LvL:
 1
 ID de Zone:
-1;924;516
+-1;0;0
 Money:
 0
 Niveau de Quetes:
-0
+0:0:0:0:0
 sac:
 NULL;NULL;NULL;NULL;NULL;LOCK;LOCK;LOCK;LOCK;LOCK;LOCK;LOCK;LOCK;LOCK;LOCK
 Touches:

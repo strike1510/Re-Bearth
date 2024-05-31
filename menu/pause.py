@@ -11,12 +11,6 @@ def Pause(zone,posx,posy,screen,HAUTEUR,LARGEUR):
     PauseFond.fill(TRANSPARENT)
     imagePauseFond = jeu.fonction.redimensionner_image('menu\\image\\pause.png', LARGEUR, HAUTEUR)
     imagepausesaved = jeu.fonction.redimensionner_image('menu\\image\\pauses.png', LARGEUR, HAUTEUR)
-    
-
-    with open('donnee\\sauvegarde.txt', 'r') as file:
-        stocke = []
-        for line in file:
-            stocke.append(line.replace("\n",""))
 
     pygame.mixer.music.pause()
     while pause == True:
@@ -35,29 +29,18 @@ def Pause(zone,posx,posy,screen,HAUTEUR,LARGEUR):
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
-                    if 795*LARGEUR/1920 <= x <= 1125*LARGEUR/1920 and 645*HAUTEUR/1080 <= y <= 740*HAUTEUR/1080:
+                    if 795*LARGEUR/1920 <= x <= 1125*LARGEUR/1920 and 680*HAUTEUR/1080 <= y <= 780*HAUTEUR/1080:
                         return False
-                    elif 795*LARGEUR/1920 <= x <= 1125*LARGEUR/1920 and 515*HAUTEUR/1080 <= y <= 610*HAUTEUR/1080:
+                    elif 795*LARGEUR/1920 <= x <= 1125*LARGEUR/1920 and 550*HAUTEUR/1080 <= y <= 650*HAUTEUR/1080:
                         pause = False
                         pygame.mixer.music.unpause()
                         menu.options.parametre(screen,HAUTEUR,LARGEUR)
                         return True
-                    elif 795*LARGEUR/1920 <= x <= 1125*LARGEUR/1920 and 255*HAUTEUR/1080 <= y <= 358*HAUTEUR/1080:
+                    elif 793*LARGEUR/1920 <= x <= 1125*LARGEUR/1920 and 298*HAUTEUR/1080 <= y <= 398*HAUTEUR/1080:
                         pause = False
                         pygame.mixer.music.unpause()
                         return True
-                    elif 795*LARGEUR/1920 <= x <= 1125*LARGEUR/1920 and 390*HAUTEUR/1080 <= y <= 485*HAUTEUR/1080:
+                    elif 795*LARGEUR/1920 <= x <= 1125*LARGEUR/1920 and 425*HAUTEUR/1080 <= y <= 525*HAUTEUR/1080:
                         imagePauseFond = imagepausesaved
-                        testtemporaire = "Default"
-                        with open('donnee\\sauvegarde.txt', 'w') as file:
-                            for i in range (len(stocke)):
-                                if testtemporaire == "Default":
-                                    text_a_ecrire = "{}\n".format(stocke[i])
-                                    if stocke[i] == "ID de Zone:":
-                                        testtemporaire = "ZONEID"
-                                        file.write(text_a_ecrire)
-                                    else:
-                                        file.write(text_a_ecrire)
-                                elif testtemporaire == "ZONEID":
-                                    file.write("{};{};{}\n".format(zone,posx,posy))
-                                    testtemporaire = "Default"
+                        jeu.fonction.save(zone,posx,posy,"0:0:0:0:0")
+                        

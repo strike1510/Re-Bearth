@@ -25,20 +25,33 @@ def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR, CLOCK):
     player_rect = player.get_rect(center=(pos_player_x,pos_player_y))
 
     #Image joueur :
-    imagesbas = pygame.image.load("jeu\\image\\player\\devant1.png")
-    imageplayer = imagesbas
+    imageplayer = pygame.transform.scale(pygame.image.load("jeu\\image\\player\\derriere1.png"), (128, 128))
+
+    #image pnj avec effet
+    image_pnj = pygame.transform.scale(pygame.image.load('jeu\\image\\pnj\\pnj02\\pnj1.png'), (128, 128))
+    image_excl = pygame.transform.scale(pygame.image.load('jeu\\image\\room3\\!.png'), (64, 64))
+    image_montre = pygame.transform.scale(pygame.image.load('jeu\\image\\room3\\Montre_temporelle.png'), (960, 540))
+    image_texte = [pygame.image.load(f'jeu\\image\\room3\\texte{i}.png') for i in range(1, 5)]
     
-
-    def draw_text(text, font, color, surface, x, y):
-        text_obj = font.render(text, True, color)
-        text_rect = text_obj.get_rect()
-        text_rect.center = (x, y)
-        surface.blit(text_obj, text_rect)
-
     running = True
     last = "z"
     index_image = 0
-    
+
+    set_cine_1 = 300
+    set_cine_2 = 750
+    test_texte_1 = 2
+    im_texte = 0
+    gut = 0
+
+    with open('donnee\\sauvegarde.txt', 'r') as file:
+        stocke = []
+        for line in file:
+            stocke.append(line.replace("\n",""))
+    for i in range(len(stocke)):
+        if stocke[i] == "Niveau de Quetes:":
+            NivQuete = stocke[i+1].split(":")
+        if stocke[i] == "Touches:":
+            TOUCHE_ID = stocke[i+1].split(";")
     while running:
         key = pygame.key.get_pressed()
             
@@ -46,7 +59,7 @@ def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR, CLOCK):
         screen_y = rect_y - HAUTEUR / 2
         screen.blit(background, (screen_x, screen_y))
         pygame.draw.rect(player, (0, 0, 255), player.get_rect(), 3)  
-        screen.blit(imageplayer, player_rect)
+        
         
         
         #print(colision_background.get_at((player_rect.x, player_rect.y)))
@@ -62,11 +75,53 @@ def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR, CLOCK):
             binary_values = [bin(key_index) for key_index in pressed_keys_indices]
         else:
             binary_values = ['0']
-        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, 18, 0, colision_background, HAUTEUR, LARGEUR, last, index_image, 128)
-        imageplayer = depinfo[0]
-        last = depinfo[1]
-        index_image = depinfo[2]
         
+
+        #Animation du vieux qui donne la montre
+        
+        if NivQuete[0] == "0" and NivQuete[1] == "0":
+            if test_texte_1 == 2 or test_texte_1 == 1:
+                if set_cine_1 < 751:
+                    if set_cine_1 > 449:
+                        screen.blit(image_pnj, (LARGEUR/2, set_cine_1))
+                    else:
+                        screen.blit(image_pnj, (LARGEUR/2, 450))
+                        screen.blit(image_excl, (LARGEUR/2, 386))
+                else:
+                    screen.blit(image_pnj, (LARGEUR/2, 750))
+                    if test_texte_1 != 2:
+                        screen.blit(image_montre, (LARGEUR*0.25, HAUTEUR*0.25))
+                    else:
+                        test_texte_1 = 0
+                    
+                
+                set_cine_1+=10
+                if set_cine_1 > 1100:
+                    jeu.fonction.save(3,player_rect.x,player_rect.y,"0:1:0:0:0")
+                    NivQuete[1] = "1"
+                
+                
+        else:
+            if NivQuete[0] == "0" and NivQuete[1] == "1":
+                set_cine_2+=10
+                screen.blit(image_pnj, (LARGEUR/2, set_cine_2))
+            depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, 18, 0, colision_background, HAUTEUR, LARGEUR, last, index_image, 128)
+            imageplayer = depinfo[0]
+            last = depinfo[1]
+            index_image = depinfo[2]
+        
+
+
+        if test_texte_1 == 2 or test_texte_1 == 1:
+            screen.blit(imageplayer, player_rect)
+        else:
+            screen.blit(image_pnj, (LARGEUR/2, 750))
+            screen.blit(imageplayer, player_rect)
+            if im_texte == 1:
+                screen.blit(image_montre, (LARGEUR*0.25, HAUTEUR*0.25))
+            if im_texte < 4:
+                screen.blit(image_texte[im_texte], (0, 0))
+
         #   Code pour pause :
         if key[pygame.K_ESCAPE] == True:
             if testpause == False:
@@ -76,19 +131,29 @@ def Jeuroom3(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR, CLOCK):
                     running = False
         else:
             testpause = False
-        if 840 < player_rect.x < 1045 and 970 < player_rect.y < 1000:
+        if 840*LARGEUR/1920 < player_rect.x < 1045*LARGEUR/1920 and 900*HAUTEUR/1080 < player_rect.y < 1000*HAUTEUR/1080:
             with open('donnee\\sauvegarde.txt', 'r') as file:
                 stocke = []
                 for line in file:
                     stocke.append(line.replace("\n",""))
-
             for i in range(len(stocke)):
                 if stocke[i] == "Touches:":
                     TOUCHE_ID = stocke[i+1].split(";")
             if TOUCHE_ID[4] in binary_values:
+                jeu.fonction.save(3,player_rect.x,player_rect.y,"0:0:1:0:0")
                 jeu.room2.Jeuroom2(screen, 960*LARGEUR/1920, 600*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
                 running = False
-        
+        if TOUCHE_ID[4] in binary_values:
+            if test_texte_1 == 0:
+                if im_texte <4:
+                    if gut == 0:
+                        im_texte+=1
+                        gut = 1
+                else:
+                    test_texte_1 = 1
+        else:
+            gut = 0
+                
         clock.tick(CLOCK)
         
 

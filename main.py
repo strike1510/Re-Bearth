@@ -13,7 +13,7 @@ import menu.menu
 import menu.pause
 import jeu.fonction
 import jeu.game
-import jeu.room1,jeu.room2,jeu.room3,jeu.room4,jeu.room5, jeu.room6, jeu.room7, jeu.room8
+import jeu.room1,jeu.room2,jeu.room3,jeu.room4,jeu.room5, jeu.room6, jeu.room7, jeu.room8, jeu.room9, jeu.room10, jeu.room11, jeu.room12
 
 
 from pygame.locals import *
@@ -34,7 +34,6 @@ LARGEUR = screen_info.current_w
 HAUTEUR = screen_info.current_h
 VITESSE = 12
 FPS = 15
-print(LARGEUR,HAUTEUR)
 # Code :
 
 test = menu.menu.GrandMenu(screen, HAUTEUR, LARGEUR)
@@ -74,5 +73,13 @@ if test:
         jeu.room7.Jeuroom7(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR, FPS)
     elif ZONE_ID[0] == "8":
         jeu.room8.Jeuroom8(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR, FPS)
+    elif ZONE_ID[0] == "9":
+        jeu.room9.Jeuroom9(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR, FPS)
+    elif ZONE_ID[0] == "10":
+        jeu.room10.Jeuroom10(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR, FPS)
+    elif ZONE_ID[0] == "11":
+        jeu.room11.Jeuroom11(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR, FPS)
+    elif ZONE_ID[0] == "12":
+        jeu.room12.Jeuroom12(screen, int(ZONE_ID[1]), int(ZONE_ID[2]), VITESSE, HAUTEUR, LARGEUR, FPS)
 
 pygame.quit()
