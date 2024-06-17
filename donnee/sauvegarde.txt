@@ -1,11 +1,11 @@
 LvL:
 1
 ID de Zone:
-7;1176;388
+-1;0;0
 Money:
 0
 Niveau de Quetes:
-1:0:0:0:0
+0:0:0:0:0
 armure/arme/autre:
 1:0;NULL;NULL;NULL;NULL
 sac:

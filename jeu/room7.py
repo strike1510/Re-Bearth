@@ -41,6 +41,8 @@ def Jeuroom7(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
     running = True
     last = "z"
     index_image = 0
+    test = 0
+    checkspace = False
     
     while running:
         key = pygame.key.get_pressed()
@@ -82,14 +84,30 @@ def Jeuroom7(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
         else:
             testpause = False
         
-        
         if 1840 < player_rect.x < 1900 and 330 < player_rect.y < 460:
             jeu.game.LancementJeu(screen, 100*LARGEUR/1920, 420*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
             running = False
-        elif 0 < player_rect.x < 20 and 340 < player_rect.y < 500:
+        elif 1015 < player_rect.x < 1100 and 320 < player_rect.y < 370:
+            if "0b101100" in binary_values and NivQuete[0] == "1":
+                if checkspace == True and test == 0:
+                    jeu.fonction.chargement(screen,2)
+                    checkspace == False
+                    test = 1
+                elif checkspace == True and test == 1:
+                    jeu.fonction.chargement(screen,2)
+                    checkspace == False
+                    test = 2
+                elif checkspace == True and test == 2:
+                    jeu.fonction.chargement(screen,2)
+                    checkspace == False
+                    test = 0
+                    
+        if 0 < player_rect.x < 20 and 340 < player_rect.y < 500:
             jeu.room8.Jeuroom8(screen, 1800*LARGEUR/1920, 420*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
             running = False
-        
+
+
+
         clock.tick(CLOCK)
         
 

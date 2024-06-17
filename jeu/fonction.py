@@ -267,9 +267,23 @@ def save(zone,posx,posy,addquette):
 def chargement(screen,temp):
     if temp == 1:
         imagesload = [pygame.transform.scale(pygame.image.load(f"jeu\\image\\load\\load1\\load{i}.png"), (1920,1080)) for i in range(1, 5)]
-        for j in range(0,1):
-            for i in range(0,4):
-                screen.blit(imagesload[i], (0,0))
-                pygame.display.update()
-                pygame.display.flip()
-                time.sleep(1)
+        for i in range(0,4):
+            screen.blit(imagesload[i], (0,0))
+            pygame.display.update()
+            pygame.display.flip()
+            time.sleep(1)
+    elif temp ==2:
+        imagesload = pygame.transform.scale(pygame.image.load(f"jeu\\image\\room7\\maya1.png"), (1920,1080))
+        screen.blit(imagesload, (0,0))
+        pygame.display.update()
+        pygame.display.flip()
+    elif temp ==3:
+        imagesload = pygame.transform.scale(pygame.image.load(f"jeu\\image\\room7\\maya2.png"), (1920,1080))
+        screen.blit(imagesload, (0,0))
+        pygame.display.update()
+        pygame.display.flip()
+    elif temp ==4:
+        imagesload = pygame.transform.scale(pygame.image.load(f"jeu\\image\\room7\\maya3.png"), (1920,1080))
+        screen.blit(imagesload, (0,0))
+        pygame.display.update()
+        pygame.display.flip()
