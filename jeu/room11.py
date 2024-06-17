@@ -27,7 +27,7 @@ def Jeuroom11(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
     player_rect = player.get_rect(center=(pos_player_x,pos_player_y))
 
     #Image joueur :
-    imagesbas = pygame.image.load("jeu\\image\\player\\devant1.png")
+    imagesbas = pygame.image.load("jeu\\image\\player\\futur1\\devant1.png")
     imageplayer = imagesbas
 
     
@@ -95,7 +95,7 @@ def Jeuroom11(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
         else:
             binary_values = ['0']
         
-        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image, 64)
+        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, VITESSE, 1, colision_background, HAUTEUR, LARGEUR, last, index_image, 64)
         imageplayer = depinfo[0]
         last = depinfo[1]
         index_image = depinfo[2]

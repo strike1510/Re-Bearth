@@ -1,4 +1,4 @@
-import pygame, sys , jeu.room1 , menu.pause , math , jeu.fonction, time
+import pygame, sys , jeu.room1 , menu.options , math , jeu.fonction, time
 def battle(screen,pos_player_x,pos_player_y,nombre_mob,IDmob,healthplayer, HAUTEUR,LARGEUR):
     testpause = False
     WHITE = (255, 255, 255)
@@ -23,7 +23,7 @@ def battle(screen,pos_player_x,pos_player_y,nombre_mob,IDmob,healthplayer, HAUTE
     player.fill(TRANSPARENT)
 
     #Image joueur :
-    imagesbas = pygame.image.load("jeu\\image\\player\\devant.png")
+    imagesbas = pygame.image.load("jeu\\image\\player\\futur1\\devant1.png")
     imageplayer = imagesbas
 
     running = True
@@ -62,7 +62,14 @@ def battle(screen,pos_player_x,pos_player_y,nombre_mob,IDmob,healthplayer, HAUTE
         imagesarmes = [pygame.image.load(f"jeu\\image\\combat\\objet\\epee\\epee{i}.png") for i in range(1, framearmes+1)]
     if IDmob == 0:
         framemob = 6
+        tempframe = 30
         imagesmob = [pygame.image.load(f"jeu\\image\\combat\\blob\\blob{i}.png") for i in range(1, framemob+1)]
+        healthmob = 100
+        mobattaque = 5
+    if IDmob == 1:
+        framemob = 16
+        tempframe = 5
+        imagesmob = [pygame.image.load(f"jeu\\image\\combat\\gblob\\gblob{i}.png") for i in range(1, framemob+1)]
         healthmob = 100
         mobattaque = 5
     maxhealthmob = healthmob
@@ -139,7 +146,7 @@ def battle(screen,pos_player_x,pos_player_y,nombre_mob,IDmob,healthplayer, HAUTE
         pygame.draw.rect(player, (0, 0, 255), player.get_rect(), 3)  
         player_rect = player.get_rect(center=(coo[cooplayerx][cooplayery]))
         xtemp1,ytemp1 = coo[cooplayerx][cooplayery]
-        armesplayer_rect = armesplayer.get_rect(center=(xtemp1 + 35,ytemp1 - 30))
+        armesplayer_rect = armesplayer.get_rect(center=(xtemp1 + 37,ytemp1 - 14))
         
         if action and attaque_sur_joueur:
             healthplayer -= mobattaque
@@ -220,7 +227,7 @@ def battle(screen,pos_player_x,pos_player_y,nombre_mob,IDmob,healthplayer, HAUTE
             _Itemp = 0
             screen.blit(imagesarmes[0],armesplayer_rect)
         if nombre_mob == 1:
-            if tempo_pour_frame > 30:
+            if tempo_pour_frame > tempframe:
                 tempo_pour_frame =0
                 if frame < framemob -1:
                     frame +=1
@@ -235,10 +242,8 @@ def battle(screen,pos_player_x,pos_player_y,nombre_mob,IDmob,healthplayer, HAUTE
         #   Code pour pause :
         if key[pygame.K_ESCAPE] == True:
             if testpause == False:
-                testquit = menu.pause.Pause(screen,HAUTEUR,LARGEUR)
+                menu.options.parametre(screen,HAUTEUR,LARGEUR)
                 testpause = True
-                if testquit == False:
-                    running = False
         else:
             testpause = False
         
@@ -246,5 +251,9 @@ def battle(screen,pos_player_x,pos_player_y,nombre_mob,IDmob,healthplayer, HAUTE
         if nombre_mob == 1:
             if healthmob <= 0:
                 running = False
+                return True
+        if healthplayer <= 0:
+            running = False
+            return False
         pygame.display.flip()
         pygame.display.update() 

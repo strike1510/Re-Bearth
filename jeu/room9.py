@@ -28,7 +28,7 @@ def Jeuroom9(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
     porte_rect = porte.get_rect(center=(960*LARGEUR/1920, 540*HAUTEUR/1080))
 
     #Image joueur :
-    imagesbas = pygame.image.load("jeu\\image\\player\\devant1.png")
+    imagesbas = pygame.image.load("jeu\\image\\player\\futur1\\devant1.png")
     imageplayer = imagesbas
     
     with open('donnee\\sauvegarde.txt', 'r') as file:
@@ -78,7 +78,7 @@ def Jeuroom9(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
             binary_values = [bin(key_index) for key_index in pressed_keys_indices]
         else:
             binary_values = ['0']
-        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, VITESSE, 0, colision_background, HAUTEUR, LARGEUR, last, index_image, 64)
+        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, VITESSE, 1, colision_background, HAUTEUR, LARGEUR, last, index_image, 64)
         imageplayer = depinfo[0]
         last = depinfo[1]
         index_image = depinfo[2]

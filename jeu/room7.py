@@ -27,13 +27,16 @@ def Jeuroom7(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
     #Image joueur :
     imagesbas = pygame.image.load("jeu\\image\\player\\devant1.png")
     imageplayer = imagesbas
-    
+    imagepnj = pygame.image.load("jeu\\image\\pnj\\pnj03\\pnj1.png")
 
-    def draw_text(text, font, color, surface, x, y):
-        text_obj = font.render(text, True, color)
-        text_rect = text_obj.get_rect()
-        text_rect.center = (x, y)
-        surface.blit(text_obj, text_rect)
+    with open('donnee\\sauvegarde.txt', 'r') as file:
+        stocke = []
+        for line in file:
+            stocke.append(line.replace("\n",""))
+
+    for i in range(len(stocke)):
+        if stocke[i] == "Niveau de Quetes:":
+            NivQuete = stocke[i+1]
 
     running = True
     last = "z"
@@ -46,10 +49,13 @@ def Jeuroom7(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
         screen_y = rect_y - HAUTEUR / 2
         screen.blit(background, (screen_x, screen_y))
         pygame.draw.rect(player, (0, 0, 255), player.get_rect(), 3)  
+        
+        
+        if NivQuete[0] == '1':
+            screen.blit(imagepnj, (1060, 340))
+
+
         screen.blit(imageplayer, player_rect)
-        
-        
-        
         for event in pygame.event.get():
             
             if event.type == pygame.QUIT:
@@ -75,6 +81,8 @@ def Jeuroom7(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK):
                     running = False
         else:
             testpause = False
+        
+        
         if 1840 < player_rect.x < 1900 and 330 < player_rect.y < 460:
             jeu.game.LancementJeu(screen, 100*LARGEUR/1920, 420*HAUTEUR/1080, VITESSE, HAUTEUR, LARGEUR, CLOCK)
             running = False

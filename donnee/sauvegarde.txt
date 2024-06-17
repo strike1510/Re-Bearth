@@ -1,11 +1,13 @@
 LvL:
 1
 ID de Zone:
--1;0;0
+7;1176;388
 Money:
 0
 Niveau de Quetes:
-0:0:0:0:0
+1:0:0:0:0
+armure/arme/autre:
+1:0;NULL;NULL;NULL;NULL
 sac:
 NULL;NULL;NULL;NULL;NULL;LOCK;LOCK;LOCK;LOCK;LOCK;LOCK;LOCK;LOCK;LOCK;LOCK
 Touches:

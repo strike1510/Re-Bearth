@@ -71,17 +71,18 @@ def LancementJeu(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR,CLOCK
         #pygame.draw.rect(screen, (255, 0, 0), player)
         pygame.draw.rect(porte, (0, 0, 255), porte.get_rect(), 3) 
         screen.blit(image_porte, porte_rect)
-        screen.blit(imagespnj[framepnj], pnj_rectn)
-        screen.blit(imagespnj[framepnj], pnj_recto)
-        screen.blit(imagespnj[framepnj], pnj_rects)
-        if tempo > 29:
-            tempo = 0
-            if framepnj > 2:
-                framepnj = 0
+        if NivQuete[0] == '0':
+            screen.blit(imagespnj[framepnj], pnj_rectn)
+            screen.blit(imagespnj[framepnj], pnj_recto)
+            screen.blit(imagespnj[framepnj], pnj_rects)
+            if tempo > 29:
+                tempo = 0
+                if framepnj > 2:
+                    framepnj = 0
+                else:
+                    framepnj +=1
             else:
-                framepnj +=1
-        else:
-            tempo += 1
+                tempo += 1
         pygame.draw.rect(player, (0, 0, 255), player.get_rect(), 3)  
         screen.blit(imageplayer, player_rect)
         

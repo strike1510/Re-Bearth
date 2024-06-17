@@ -25,7 +25,7 @@ def Jeuroom10(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR, CLOCK):
     player_rect = player.get_rect(center=(pos_player_x,pos_player_y))
 
     #Image joueur :
-    imageplayer = pygame.transform.scale(pygame.image.load("jeu\\image\\player\\derriere1.png"), (128, 128))
+    imageplayer = pygame.transform.scale(pygame.image.load("jeu\\image\\player\\futur1\\derriere1.png"), (128, 128))
 
     #image pnj avec effet
     image_pnj = pygame.transform.scale(pygame.image.load('jeu\\image\\pnj\\pnj02\\pnj1.png'), (128, 128))
@@ -76,7 +76,7 @@ def Jeuroom10(screen,pos_player_x,pos_player_y,VITESSE, HAUTEUR,LARGEUR, CLOCK):
 
         #Animation du vieux qui donne la montre
         
-        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, 18, 0, colision_background, HAUTEUR, LARGEUR, last, index_image, 128)
+        depinfo = jeu.fonction.deplacement(binary_values,key, player_rect, 18, 1, colision_background, HAUTEUR, LARGEUR, last, index_image, 128)
         imageplayer = depinfo[0]
         last = depinfo[1]
         index_image = depinfo[2]

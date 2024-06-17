@@ -24,10 +24,17 @@ def redimensionner_image(image_path, max_width, max_height):
 
 def deplacement(touchepressed,key, PLAYER, VITESSE, perso, colision_background, HAUTEUR, LARGEUR, last, index_image, SCALE):
     # Skin 0 :
-    imagesdroite = [pygame.image.load(f"jeu\\image\\player\\droite{i}.png") for i in range(2, 6)]
-    imageshaut = [pygame.image.load(f"jeu\\image\\player\\derriere{i}.png") for i in range(2, 6)]
-    imagesbas = [pygame.image.load(f"jeu\\image\\player\\devant{i}.png") for i in range(2, 6)]
-    imagesgauche = [pygame.image.load(f"jeu\\image\\player\\gauche{i}.png") for i in range(2, 6)]
+    coltest = False
+    if perso == 0:
+        imagesdroite = [pygame.image.load(f"jeu\\image\\player\\droite{i}.png") for i in range(2, 6)]
+        imageshaut = [pygame.image.load(f"jeu\\image\\player\\derriere{i}.png") for i in range(2, 6)]
+        imagesbas = [pygame.image.load(f"jeu\\image\\player\\devant{i}.png") for i in range(2, 6)]
+        imagesgauche = [pygame.image.load(f"jeu\\image\\player\\gauche{i}.png") for i in range(2, 6)]
+    elif perso == 1:
+        imagesdroite = [pygame.image.load(f"jeu\\image\\player\\futur1\\droite{i}.png") for i in range(2, 5)]
+        imageshaut = [pygame.image.load(f"jeu\\image\\player\\futur1\\derriere{i}.png") for i in range(2, 5)]
+        imagesbas = [pygame.image.load(f"jeu\\image\\player\\futur1\\devant{i}.png") for i in range(2, 5)]
+        imagesgauche = [pygame.image.load(f"jeu\\image\\player\\futur1\\gauche{i}.png") for i in range(2, 5)]
     dimmension_perso = SCALE
     with open('donnee\\sauvegarde.txt', 'r') as file:
         stocke = []
@@ -48,6 +55,8 @@ def deplacement(touchepressed,key, PLAYER, VITESSE, perso, colision_background, 
                 imageplayer = imagesgauche[index_image]
                 index_image = (index_image + 1) % len(imagesgauche)
                 last = "q"
+        else:
+            coltest = True
     elif touchepressed == [TOUCHE_ID[3]]:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.x < 1850*LARGEUR/1920:
@@ -57,6 +66,8 @@ def deplacement(touchepressed,key, PLAYER, VITESSE, perso, colision_background, 
                 imageplayer = imagesdroite[index_image]
                 index_image = (index_image + 1) % len(imagesdroite)
                 last = "d"
+        else:
+            coltest = True
     elif [TOUCHE_ID[0]] == touchepressed:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.y > 10*HAUTEUR/1080:
@@ -66,6 +77,8 @@ def deplacement(touchepressed,key, PLAYER, VITESSE, perso, colision_background, 
                 imageplayer = imageshaut[index_image]
                 index_image = (index_image + 1) % len(imageshaut)
                 last = "z"
+        else:
+            coltest = True
     elif touchepressed == [TOUCHE_ID[2]]:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.y < 1000*HAUTEUR/1080:
@@ -75,7 +88,8 @@ def deplacement(touchepressed,key, PLAYER, VITESSE, perso, colision_background, 
                 imageplayer = imagesbas[index_image]
                 index_image = (index_image + 1) % len(imagesbas)
                 last = "s"
-        
+        else:
+            coltest = True
     elif TOUCHE_ID[1] in touchepressed and TOUCHE_ID[2] in touchepressed:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.y < 1000*HAUTEUR/1080 and PLAYER.x > 10*LARGEUR/1920:
@@ -86,7 +100,8 @@ def deplacement(touchepressed,key, PLAYER, VITESSE, perso, colision_background, 
                 imageplayer = imagesbas[index_image]
                 index_image = (index_image + 1) % len(imagesbas)
                 last = "sq"
-        
+        else:
+            coltest = True
     elif TOUCHE_ID[2] in touchepressed and TOUCHE_ID[3] in touchepressed:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.y < 1000*HAUTEUR/1080 and PLAYER.x < 1850*LARGEUR/1920:
@@ -97,7 +112,8 @@ def deplacement(touchepressed,key, PLAYER, VITESSE, perso, colision_background, 
                 imageplayer = imagesbas[index_image]
                 index_image = (index_image + 1) % len(imagesbas)
                 last = "sd"
-        
+        else:
+            coltest = True
     elif TOUCHE_ID[1] in touchepressed and TOUCHE_ID[0] in touchepressed:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.y > 10*HAUTEUR/1080 and PLAYER.x > 10*LARGEUR/1920:
@@ -108,7 +124,8 @@ def deplacement(touchepressed,key, PLAYER, VITESSE, perso, colision_background, 
                 imageplayer = imageshaut[index_image]
                 index_image = (index_image + 1) % len(imageshaut)
                 last = "zq"
-        
+        else:
+            coltest = True
     elif TOUCHE_ID[3] in touchepressed and TOUCHE_ID[0] in touchepressed:
         if colision_background.get_at((PLAYER.x, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) not in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) not in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) not in collision_colors:
             if PLAYER.y > 10*HAUTEUR/1080 and PLAYER.x < 1850*LARGEUR/1920:
@@ -119,57 +136,85 @@ def deplacement(touchepressed,key, PLAYER, VITESSE, perso, colision_background, 
                 imageplayer = imageshaut[index_image]
                 index_image = (index_image + 1) % len(imageshaut)
                 last = "zd"
+        else:
+            coltest = True
     else:
         index_image = 0
         if last == "z":
-            imageplayer = pygame.image.load(f"jeu\\image\\player\\derriere1.png")
+            if perso == 0:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\derriere1.png")
+            elif perso == 1:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\futur1\\derriere1.png")
         elif last == "s":
-            imageplayer = pygame.image.load(f"jeu\\image\\player\\devant1.png")
+            if perso == 0:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\devant1.png")
+            elif perso == 1:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\futur1\\devant1.png")
         elif last == "q":
-            imageplayer = pygame.image.load(f"jeu\\image\\player\\gauche1.png")
+            if perso == 0:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\gauche1.png")
+            elif perso == 1:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\futur1\\gauche1.png")
         elif last == "d":
-            imageplayer = pygame.image.load(f"jeu\\image\\player\\droite1.png")
+            if perso == 0:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\droite1.png")
+            if perso == 1:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\futur1\\droite1.png")
         elif last == "zq":
-            imageplayer = pygame.image.load(f"jeu\\image\\player\\devant1.png")
+            if perso == 0:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\devant1.png")
+            elif perso == 1:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\futur1\\devant1.png")
         elif last == "zd":
-            imageplayer = pygame.image.load(f"jeu\\image\\player\\devant1.png")
+            if perso == 0:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\devant1.png")
+            elif perso == 1:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\futur1\\devant1.png")
         elif last == "sq":
-            imageplayer = pygame.image.load(f"jeu\\image\\player\\derriere1.png")
+            if perso == 0:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\derriere1.png")
+            elif perso == 1:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\futur1\\derriere1.png")
         elif last == "sd":
-            imageplayer = pygame.image.load(f"jeu\\image\\player\\derriere1.png")
+            if perso == 0:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\derriere1.png")
+            elif perso == 1:
+                imageplayer = pygame.image.load(f"jeu\\image\\player\\futur1\\derriere1.png")
         else:
             print("Error")
         
 
         
-    if colision_background.get_at((PLAYER.x, PLAYER.y)) in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) in collision_colors:
-        if last == "z":
-            PLAYER.move_ip(0, VITESSE)
-        elif last == "s":
-            PLAYER.move_ip(0, -VITESSE)
-        elif last == "q":
-            PLAYER.move_ip(VITESSE, 0)
-        elif last == "d":
-            PLAYER.move_ip(-VITESSE, 0)
-        elif last == "zq":
-            PLAYER.move_ip(0, round(VITESSE/math.sqrt(2)))
-            PLAYER.move_ip(round(VITESSE/math.sqrt(2)), 0)
-        elif last == "zd":
-            PLAYER.move_ip(0, round(VITESSE/math.sqrt(2)))
-            PLAYER.move_ip(-round(VITESSE/math.sqrt(2)), 0)
-        elif last == "sq":
-            PLAYER.move_ip(0, -round(VITESSE/math.sqrt(2)))
-            PLAYER.move_ip(round(VITESSE/math.sqrt(2)), 0)
-        elif last == "sd":
-            PLAYER.move_ip(0, -round(VITESSE/math.sqrt(2)))
-            PLAYER.move_ip(-round(VITESSE/math.sqrt(2)), 0)
-        else:
-            print("Error")
+    if coltest == False:
+        if colision_background.get_at((PLAYER.x, PLAYER.y)) in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y+dimmension_perso)) in collision_colors or colision_background.get_at((PLAYER.x+dimmension_perso, PLAYER.y)) in collision_colors or colision_background.get_at((PLAYER.x, PLAYER.y+dimmension_perso)) in collision_colors:
+            if last == "z":
+                PLAYER.move_ip(0, VITESSE)
+            elif last == "s":
+                PLAYER.move_ip(0, -VITESSE)
+            elif last == "q":
+                PLAYER.move_ip(VITESSE, 0)
+            elif last == "d":
+                PLAYER.move_ip(-VITESSE, 0)
+            elif last == "zq":
+                PLAYER.move_ip(0, round(VITESSE/math.sqrt(2)))
+                PLAYER.move_ip(round(VITESSE/math.sqrt(2)), 0)
+            elif last == "zd":
+                PLAYER.move_ip(0, round(VITESSE/math.sqrt(2)))
+                PLAYER.move_ip(-round(VITESSE/math.sqrt(2)), 0)
+            elif last == "sq":
+                PLAYER.move_ip(0, -round(VITESSE/math.sqrt(2)))
+                PLAYER.move_ip(round(VITESSE/math.sqrt(2)), 0)
+            elif last == "sd":
+                PLAYER.move_ip(0, -round(VITESSE/math.sqrt(2)))
+                PLAYER.move_ip(-round(VITESSE/math.sqrt(2)), 0)
+            else:
+                print("Error")
     
     imageplayer = pygame.transform.scale(imageplayer, (SCALE, SCALE))
     info = [imageplayer, last, index_image]
 
     return info
+
 
 #fonction de detection de zone
 # position x et y du joueur , puis zone x1 y1 et zone x2 y2, et la hauteur et largeur de l'écran  
@@ -186,6 +231,16 @@ def EntryZone1920(x,y,zonex1,zoney1,zonex2,zoney2,HAUTEUR,LARGEUR):
         return False
 
 def save(zone,posx,posy,addquette):
+    if posx < 64:
+        posx = 64
+    else:
+        if posx >1856:
+            posx = 1856
+    if posy < 64:
+        posy = 64
+    else:
+        if posy > 1016:
+            posy = 1016
     with open('donnee\\sauvegarde.txt', 'r') as file:
         stocke = []
         for line in file:
@@ -203,7 +258,7 @@ def save(zone,posx,posy,addquette):
         for i in range(len(stocke)):
             if stocke[i] == "Niveau de Quetes:":
                 stocke[i+1] = "{}:{}:{}:{}:{}".format(queteID[0],queteID[1],queteID[2],queteID[3],queteID[4])
-            elif stocke[i] == "ID de Zone:":
+            elif stocke[i] == "ID de Zone:" and zone != '-2':
                 stocke[i+1] = "{};{};{}".format(zone,posx,posy)
             text_a_ecrire = "{}\n".format(stocke[i])
             print
